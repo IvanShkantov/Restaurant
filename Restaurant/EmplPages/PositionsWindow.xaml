@@ -1,0 +1,254 @@
+﻿<Window x:Class="Restaurant.EmplPages.PositionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Restaurant.EmplPages"
+        mc:Ignorable="d"
+        Title="PositionsWindow">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+
+        <Style x:Key="PositionTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="BorderBrush" Value="#CED4DA"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#80BDFF"/>
+                                <Setter Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ColoredCheckBox" TargetType="CheckBox">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="4,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border x:Name="CheckBorder"
+                                Background="#FFF5F5"
+                                BorderBrush="#FFD0D0"
+                                BorderThickness="1"
+                                CornerRadius="6"
+                                Padding="10,8">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="StatusIcon"
+                                           Text="✖"
+                                           FontSize="14"
+                                           Foreground="#DC3545"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,8,0"/>
+                                <ContentPresenter VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckBorder" Property="Background" Value="#F0FFF4"/>
+                                <Setter TargetName="CheckBorder" Property="BorderBrush" Value="#C6F6D5"/>
+                                <Setter TargetName="StatusIcon" Property="Text" Value="✔"/>
+                                <Setter TargetName="StatusIcon" Property="Foreground" Value="#28A745"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="CheckBorder" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PositionButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5"
+                                Padding="3">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E0E0E0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                   Text="ДОЛЖНОСТИ И ПРАВА" 
+                   FontSize="22" FontWeight="Bold" 
+                   Margin="0,0,0,15"/>
+
+        <Grid Grid.Row="1" Margin="0,0,0,15">
+            <Button x:Name="AddPositionBtn" 
+                    Content="➕ Добавить должность" 
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Width="180" Height="30" 
+                    HorizontalAlignment="Left"
+                    Click="AddPositionBtn_Click"/>
+            <TextBlock HorizontalAlignment="Right" 
+                       VerticalAlignment="Center"
+                       Foreground="#6C757D" FontSize="12">
+                <Run Text="Всего должностей: "/>
+                <Run Text="{Binding Positions.Count, Mode=OneWay}"/>
+            </TextBlock>
+        </Grid>
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl ItemsSource="{Binding Positions}"  d:ItemsSource="{d:SampleData ItemCount=6}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Expander Margin="10,5" 
+                                  ExpandDirection="Down" 
+                                  IsExpanded="True" 
+                                  Padding="10,0,0,0"
+                                  MinWidth="320"
+                                  MaxWidth="420">
+                            <Expander.Style>
+                                <Style TargetType="Expander">
+                                    <Setter Property="Background" Value="#FFEAEAEA"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDeleted}" Value="True">
+                                            <Setter Property="Background" Value="#FFFFE7E7"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsNew}" Value="True">
+                                            <Setter Property="Background" Value="#E8F5E9"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsModified}" Value="True">
+                                            <Setter Property="Background" Value="#FFFDE7"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Expander.Style>
+
+                            <Expander.Header>
+                                <Border CornerRadius="15" Margin="10"
+                                        BorderBrush="#E0E0E0" BorderThickness="1">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="White"/>
+                                        </Style>
+                                    </Border.Style>
+
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="1" MinWidth="150">
+                                            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                                     FontWeight="Bold" FontSize="15">
+                                            </TextBox>
+                                        </Grid>
+
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="5,0">
+                                            <Button Content="↩" 
+                                                    Click="RestorePosition_Click"
+                                                    Tag="{Binding}"
+                                                    ToolTip="Восстановить">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource PositionButtonStyle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsDeleted}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsDeleted}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+
+                                            <Button Content="🗑️" 
+                                                    Click="DeletePosition_Click"
+                                                    Tag="{Binding}"
+                                                    ToolTip="Удалить должность">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource PositionButtonStyle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsDeleted}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </Expander.Header>
+
+                            <ItemsControl ItemsSource="{Binding Permissions}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding PermissionName}" 
+                                                  IsChecked="{Binding HasPermission, Mode=TwoWay}"
+                                                  Style="{StaticResource ColoredCheckBox}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Expander>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button x:Name="SaveAllBtn" 
+                    Content="💾 Сохранить все изменения" 
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Width="200" Height="35"
+                    Click="SaveAllBtn_Click"/>
+            <Button x:Name="CancelBtn" 
+                    Content="Отмена" 
+                    Width="100" Height="35" 
+                    Margin="10,0,0,0"
+                    Click="CancelBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

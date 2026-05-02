@@ -1,0 +1,340 @@
+﻿<Page x:Class="Restaurant.Reports.ReportsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Restaurant.Reports"
+      mc:Ignorable="d"
+      Title="ReportsPage" Background="White">
+
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+
+        <Style x:Key="FilterLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="TotalCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#DEE2E6"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="20,15"/>
+            <Setter Property="Margin" Value="0,0,15,0"/>
+        </Style>
+
+        <Style x:Key="TotalLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#6C757D"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+
+        <Style x:Key="TotalValueStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                   Text="ИТОГИ РАБОТЫ ПРЕДПРИЯТИЯ" 
+                   FontSize="24" FontWeight="Bold" 
+                   Margin="0,0,0,20"/>
+
+        <Border Grid.Row="1" Background="#F8F9FA" CornerRadius="8" Padding="15" Margin="0,0,0,20">
+            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+                <TextBlock Text="Тип отчета:" Style="{StaticResource FilterLabelStyle}"/>
+                <ComboBox x:Name="ReportTypeCombo"
+                          ItemsSource="{Binding ReportTypes}"
+                          SelectedItem="{Binding SelectedReportType}"
+                          MinWidth="150" Margin="0,0,20,0"/>
+
+                <TextBlock Text="Дата с:" Style="{StaticResource FilterLabelStyle}"/>
+                <DatePicker x:Name="DateFromPicker" 
+                            SelectedDate="{Binding FilterDateFrom, Mode=TwoWay}"
+                            Width="120" Margin="0,0,10,0"/>
+
+                <TextBlock Text="Дата по:" Style="{StaticResource FilterLabelStyle}"/>
+                <DatePicker x:Name="DateToPicker" 
+                            SelectedDate="{Binding FilterDateTo, Mode=TwoWay}"
+                            Width="120" Margin="0,0,20,0"/>
+
+                <CheckBox Content="Группировать по месяцам"
+                          IsChecked="{Binding GroupByMonth}"
+                          VerticalAlignment="Center" Margin="0,0,20,0"/>
+
+                <TextBlock x:Name="EmployeeFilterLabel" 
+                           Text="Сотрудник:" 
+                           Style="{StaticResource FilterLabelStyle}"
+                           Visibility="Collapsed"/>
+                <ComboBox x:Name="EmployeeFilterCombo"
+                          ItemsSource="{Binding Employees}"
+                          SelectedItem="{Binding SelectedEmployee}"
+                          DisplayMemberPath="FullName"
+                          MinWidth="180" Margin="0,0,20,0"
+                          Visibility="Collapsed"/>
+
+                <TextBlock x:Name="SupplierFilterLabel" 
+                           Text="Поставщик:" 
+                           Style="{StaticResource FilterLabelStyle}"
+                           Visibility="Collapsed"/>
+                <ComboBox x:Name="SupplierFilterCombo"
+                          ItemsSource="{Binding Suppliers}"
+                          SelectedItem="{Binding SelectedSupplier}"
+                          DisplayMemberPath="Name"
+                          MinWidth="180" Margin="0,0,20,0"
+                          Visibility="Collapsed"/>
+
+                <Button x:Name="ExportButt" 
+                        Content="📄 Экспорт в Word" 
+                        Width="140" Height="30"
+                        Click="ExportButt_Click"
+                        Style="{StaticResource SecondaryButtonStyle}"/>
+            </WrapPanel>
+        </Border>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,20">
+
+            <Border x:Name="RevenueCard" Style="{StaticResource TotalCardStyle}">
+                <StackPanel>
+                    <TextBlock Text="ВЫРУЧКА" Style="{StaticResource TotalLabelStyle}"/>
+                    <TextBlock x:Name="RevenueValue" 
+                               Text="$0,00" 
+                               Style="{StaticResource TotalValueStyle}"
+                               Foreground="#28A745"/>
+                    <TextBlock x:Name="RevenueDetail" 
+                               Text="0 заказов" 
+                               FontSize="12" Foreground="#6C757D" Margin="0,5,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <Border x:Name="ExpensesCard" Style="{StaticResource TotalCardStyle}">
+                <StackPanel>
+                    <TextBlock Text="РАСХОДЫ" Style="{StaticResource TotalLabelStyle}"/>
+                    <TextBlock x:Name="ExpensesValue" 
+                               Text="$0,00" 
+                               Style="{StaticResource TotalValueStyle}"
+                               Foreground="#DC3545"/>
+                    <TextBlock x:Name="ExpensesDetail" 
+                               Text="0 закупок" 
+                               FontSize="12" Foreground="#6C757D" Margin="0,5,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <Border x:Name="ProfitCard" Style="{StaticResource TotalCardStyle}">
+                <StackPanel>
+                    <TextBlock Text="ПРИБЫЛЬ" Style="{StaticResource TotalLabelStyle}"/>
+                    <TextBlock x:Name="ProfitValue" 
+                               Text="$0,00" 
+                               Style="{StaticResource TotalValueStyle}"
+                               Foreground="#007BFF"/>
+                    <TextBlock x:Name="ProfitDetail" 
+                               Text="" 
+                               FontSize="12" Foreground="#6C757D" Margin="0,5,0,0"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <TextBlock x:Name="OperationsTitle" 
+           Grid.Row="3" 
+           Text="СПИСОК ОПЕРАЦИЙ" 
+           FontSize="16" FontWeight="Bold" 
+           Margin="0,20,0,10"/>
+        <ScrollViewer Grid.Row="4" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="OperationsItemsControl">
+
+                <ItemsControl.Resources>
+                    <DataTemplate x:Key="GroupHeaderTemplate" DataType="{x:Type local:OperationGroup}">
+                        <Border Background="White" 
+                        CornerRadius="10"
+                        Padding="15,12"
+                        Margin="0,15,0,5"
+                        BorderBrush="#DEE2E6"
+                        BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" 
+                                Background="#E8F4FD" 
+                                CornerRadius="8" 
+                                Padding="12,6" 
+                                Margin="0,0,15,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="📅" FontSize="14" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                        <TextBlock Text="{Binding GroupTitle}" 
+                                           FontWeight="Bold" 
+                                           FontSize="14"
+                                           VerticalAlignment="Center"
+                                           Foreground="#1976D2"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <TextBlock Grid.Column="1" 
+                                   Text="{Binding SummaryText}"
+                                   FontSize="13"
+                                   Foreground="#6C757D"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0"/>
+
+                                <Border Grid.Column="2" 
+                                Background="#F8F9FA" 
+                                CornerRadius="8" 
+                                Padding="10,5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding TotalCount}" 
+                                           FontWeight="Bold" 
+                                           FontSize="14"
+                                           Foreground="#495057"
+                                           VerticalAlignment="Center"/>
+                                        <TextBlock Text=" операций" 
+                                           FontSize="12"
+                                           Foreground="#6C757D"
+                                           VerticalAlignment="Center"
+                                           Margin="3,0,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="OrderTemplate" DataType="{x:Type local:OperationViewModel}">
+                        <Border Background="#F5F5F5" 
+                        CornerRadius="8" 
+                        Padding="15"
+                        Margin="20,0,0,5"
+                        BorderBrush="#E8E8E8"
+                        BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" 
+                                Background="#D4EDDA" 
+                                CornerRadius="10" 
+                                Padding="8,3" 
+                                Margin="0,0,15,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="📋" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBlock Text="ЗАКАЗ" 
+                                           FontWeight="SemiBold" 
+                                           FontSize="11"
+                                           Foreground="#155724"
+                                           VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <TextBlock Grid.Column="1" 
+                                   Text="{Binding OperationDate, StringFormat='HH:mm'}"
+                                   VerticalAlignment="Center"
+                                   FontSize="13"
+                                   Foreground="#6C757D"/>
+
+                                <TextBlock Grid.Column="2" 
+                                   Text="{Binding EmployeeName}"
+                                   Margin="15,0,0,0" VerticalAlignment="Center"/>
+
+                                <TextBlock Grid.Column="3" 
+                                   Text="{Binding Amount, StringFormat='C'}"
+                                   FontWeight="Bold" Foreground="#28A745"
+                                   VerticalAlignment="Center" HorizontalAlignment="Right"
+                                   Margin="0,0,10,0"
+                                   FontSize="14"/>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="PurchaseTemplate" DataType="{x:Type local:OperationViewModel}">
+                        <Border Background="White"
+                        CornerRadius="8"
+                        Padding="15"
+                        Margin="20,0,0,5"
+                        BorderBrush="#E5E7EB"
+                        BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" 
+                                Background="#FFF3CD" 
+                                CornerRadius="10" 
+                                Padding="8,3" 
+                                Margin="0,0,15,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="📦" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBlock Text="ЗАКУПКА" 
+                                           FontWeight="SemiBold" 
+                                           FontSize="11"
+                                           Foreground="#856404"
+                                           VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding SupplierName}"
+                                       FontWeight="SemiBold"
+                                       FontSize="13"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                        <TextBlock Text="{Binding OperationDate, StringFormat='HH:mm'}"
+                                           FontSize="12"
+                                           Foreground="#6C757D"/>
+                                        <TextBlock Text=" • "
+                                           FontSize="12"
+                                           Foreground="#6C757D"/>
+                                        <TextBlock Text="{Binding EmployeeName}"
+                                           FontSize="12"
+                                           Foreground="#6C757D"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="2" 
+                                   Text="{Binding Amount, StringFormat='C'}"
+                                   FontWeight="Bold" Foreground="#3B82F6"
+                                   VerticalAlignment="Center" HorizontalAlignment="Right"
+                                   Margin="0,0,15,0"
+                                   FontSize="14"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.Resources>
+
+                <ItemsControl.ItemTemplateSelector>
+                    <local:OperationTemplateSelector 
+                GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
+                OrderTemplate="{StaticResource OrderTemplate}"
+                PurchaseTemplate="{StaticResource PurchaseTemplate}"/>
+                </ItemsControl.ItemTemplateSelector>
+            </ItemsControl>
+        </ScrollViewer>
+        <Button Content="⬅️ Назад" Grid.Row="5" 
+            Width="100" Height="38"
+            Click="Back_Click"
+            Style="{StaticResource SecondaryButtonStyle}"
+            VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+    </Grid>
+</Page>

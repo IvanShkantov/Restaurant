@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5245c4691e7f40b4848bee052e7a1f04" Name="Diagram1" ZoomLevel="101">
+        <EntityTypeShape EntityType="RestaurantModel.ActivityLog" Width="1.5" PointX="1.125" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.ArchivedOrderItems" Width="1.5" PointX="18.125" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.ArchivedOrders" Width="1.5" PointX="16" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.ArchivedPurchaseItems" Width="1.5" PointX="18.125" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.ArchivedPurchases" Width="1.5" PointX="16" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.DishCategories" Width="1.5" PointX="13.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Dishes" Width="1.5" PointX="11.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.DishProducts" Width="1.5" PointX="13.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Employees" Width="1.5" PointX="3.375" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.OrderItems" Width="1.5" PointX="8.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Orders" Width="1.5" PointX="6.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Permissions" Width="1.5" PointX="3.375" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Positions" Width="1.5" PointX="3.375" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.ProdCategories" Width="1.5" PointX="13.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.ProductPrices" Width="1.5" PointX="8.875" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Products" Width="1.5" PointX="11.125" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.PurchaseItems" Width="1.5" PointX="8.875" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Purchases" Width="1.5" PointX="6.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Suppliers" Width="1.5" PointX="6.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.Warehouse" Width="1.5" PointX="13.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.vw_AllPermissions" Width="1.5" PointX="25.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.vw_OrderDetails" Width="1.5" PointX="26.5" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.vw_PositionPermissions" Width="1.5" PointX="24.375" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.vw_ProductsByCategory" Width="1.5" PointX="22.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantModel.vw_PurchaseDetails" Width="1.5" PointX="26.75" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="RestaurantModel.FK_ActivityLog_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_ArchivedItem_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_ArchivedItem_Purchase" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Dish_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Dish_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_DishProducts_Dish" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_DishProducts_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Employees_Positions" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Order_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Purchase_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Item_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Products_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Item_Price" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Price_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Price_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Item_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Warehouse_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Item_Purchase" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.FK_Purchase_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantModel.PositionPermissions" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

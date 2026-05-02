@@ -1,0 +1,39 @@
+﻿<Window x:Class="Restaurant.Reports.ReportPreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Restaurant.Reports"
+        mc:Ignorable="d"
+        Title="ReportPreviewWindow">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#F8F9FA" Padding="10" BorderBrush="#DEE2E6" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="🖨 Печать" 
+                        Width="120" Height="30"
+                        Click="Print_Click"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Margin="0,0,10,0"/>
+
+                <Button Content="💾 Сохранить Word" 
+                        Width="150" Height="30"
+                        Click="SaveXps_Click"
+                        Margin="0,0,10,0"/>
+
+                <Button Content="✖ Закрыть" 
+                        Width="100" Height="30"
+                        Click="Close_Click"
+                        Style="{StaticResource SecondaryButtonStyle}"/>
+            </StackPanel>
+        </Border>
+
+        <FlowDocumentScrollViewer Grid.Row="1" 
+                                   x:Name="DocViewer"
+                                   VerticalScrollBarVisibility="Auto"/>
+    </Grid>
+</Window>

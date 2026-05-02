@@ -1,0 +1,234 @@
+﻿<Page x:Class="Restaurant.LogIn.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:Restaurant.LogIn"
+      xmlns:helpers="clr-namespace:Restaurant.Helpers"
+      mc:Ignorable="d"
+      Title="Авторизация" 
+      Background="#F4F6F9">
+
+    <Page.Resources>
+        <Style x:Key="ModernToggleSwitch" TargetType="ItemsControl">
+            <Setter Property="ItemsSource" Value="{Binding Roles}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <Border Background="#F0F0F0" 
+                            CornerRadius="25" 
+                            Padding="3"
+                            BorderBrush="#D0D0D0"
+                            BorderThickness="1" Margin="0,0,0,15">
+                            <Grid>
+                                <Border x:Name="Slider"
+                                    Background="#007BFF"
+                                    CornerRadius="22"
+                                    Width="110"
+                                    HorizontalAlignment="Left">
+                                    <Border.RenderTransform>
+                                        <TranslateTransform x:Name="SliderTransform" X="0"/>
+                                    </Border.RenderTransform>
+                                </Border>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Border x:Name="Option1" 
+                                        Width="110" 
+                                        Height="36"
+                                        CornerRadius="22"
+                                        Background="Transparent"
+                                        Cursor="Hand"
+                                        MouseLeftButtonDown="Option1_MouseDown">
+                                        <TextBlock Text="Посетитель" 
+                                               x:Name="Option1Text"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               Foreground="White"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <Border x:Name="Option2" 
+                                        Width="110" 
+                                        Height="36"
+                                        CornerRadius="22"
+                                        Background="Transparent"
+                                        Cursor="Hand"
+                                        MouseLeftButtonDown="Option2_MouseDown">
+                                        <TextBlock Text="Сотрудник" 
+                                               x:Name="Option2Text"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               Foreground="#666666"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Storyboard x:Key="ShrinkCard">
+            <DoubleAnimation Storyboard.TargetName="MainCard" 
+                         Storyboard.TargetProperty="Height"
+                         From="500" To="370" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="ExpandCard">
+            <DoubleAnimation Storyboard.TargetName="MainCard" 
+                         Storyboard.TargetProperty="Height"
+                         From="370" To="500" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </Page.Resources>
+
+    <Grid>
+        <Border x:Name="MainCard" Grid.Row="1" Background="White" 
+        CornerRadius="10" 
+        Padding="30,20,30,30" 
+        Width="380"
+        HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" 
+                          ShadowDepth="2" 
+                          Opacity="0.1" 
+                          Direction="270"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ItemsControl x:Name="RoleToggle" Style="{StaticResource ModernToggleSwitch}" HorizontalAlignment="Center"/>
+
+                <Grid x:Name="gridEmpl" Grid.Row="1" Visibility="Collapsed">
+                    <Grid x:Name="gridEnter" Visibility="Visible">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock Grid.Row="0" Text="Вход" Style="{StaticResource HeaderStyle}"/>
+
+                            <TextBox Grid.Row="1" x:Name="tbLogin" 
+                             Style="{StaticResource WatermarkTextBox}" 
+                             Tag="Логин"
+                             Text="admin"/>
+
+                            <PasswordBox Grid.Row="2"  x:Name="tbPassword" 
+                             Style="{StaticResource WatermarkPasswordBox}"
+                             Tag="Пароль"
+                             helpers:PasswordBoxHelper.MonitorPassword="True"
+                             Password="123"/>
+
+                            <Button Grid.Row="3" x:Name="enter_butt" 
+                            Content="Войти" 
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Click="Login_Click"/>
+
+                            <Button Grid.Row="4" x:Name="toReg_butt" 
+                            Content="Регистрация" 
+                            Style="{StaticResource LinkButtonStyle}"
+                            HorizontalAlignment="Center"
+                            Click="toReg_butt_Click"/>
+                        </Grid>
+                    </Grid>
+
+                    <Grid x:Name="gridRegistr" Visibility="Collapsed">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Text="Регистрация" Style="{StaticResource HeaderStyle}"/>
+
+                            <TextBox Grid.Row="1" x:Name="LNameBox" 
+                             Style="{StaticResource WatermarkTextBox}"
+                             Tag="Фамилия"/>
+
+                            <TextBox Grid.Row="2" x:Name="FNameBox" 
+                             Style="{StaticResource WatermarkTextBox}"
+                             Tag="Имя"/>
+
+                            <TextBox Grid.Row="3" x:Name="MNameBox" 
+                             Style="{StaticResource WatermarkTextBox}"
+                             Tag="Отчество"/>
+
+                            <TextBox Grid.Row="4" x:Name="InviteCodeBox" 
+                             Style="{StaticResource WatermarkTextBox}"
+                             Tag="Пригласительный код"/>
+
+                            <TextBox Grid.Row="5" x:Name="LoginBox" 
+                             Style="{StaticResource WatermarkTextBox}"
+                             Tag="Придумайте логин" Margin="0,30,0,8"/>
+
+                            <PasswordBox Grid.Row="6"  x:Name="PasswordBox" 
+                             Style="{StaticResource WatermarkPasswordBox}"
+                             Tag="Придумайте пароль"
+                             helpers:PasswordBoxHelper.MonitorPassword="True"/>
+
+                            <PasswordBox Grid.Row="7"  x:Name="ConfirmPasswordBox" 
+                             Style="{StaticResource WatermarkPasswordBox}"
+                             Tag="Подтвердите пароль"
+                             helpers:PasswordBoxHelper.MonitorPassword="True"/>
+
+
+                            <Button Grid.Row="8" x:Name="registr_butt" 
+                            Content="Зарегистрироваться" 
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Click="RegisterBtn_Click"/>
+
+                            <Button Grid.Row="9" x:Name="toEnter_butt" 
+                            Content="Вход" 
+                            Style="{StaticResource LinkButtonStyle}"
+                            HorizontalAlignment="Center"
+                            Click="toEnter_butt_Click"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid x:Name="gridVisitor" Grid.Row="1" Visibility="Visible">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Button Grid.Row="0" x:Name="Menu_btn" 
+                        Content="Открыть меню" 
+                        Background="#2C1810" 
+                        Foreground="#D4A574"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Width="200"
+                        HorizontalAlignment="Center"
+                        Click="RegisterBtn_Click"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

@@ -1,0 +1,126 @@
+﻿<Page x:Class="Restaurant.Menu.MainPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Restaurant.Menu"
+        mc:Ignorable="d"
+        Title="MainPage" Background="#F5F6FA">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+
+        <Style x:Key="MenuCardStyle" TargetType="Button">
+            <Setter Property="Width" Value="220"/>
+            <Setter Property="Height" Value="160"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        CornerRadius="16"
+                        BorderBrush="#E8ECF1"
+                        BorderThickness="1">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect BlurRadius="15" ShadowDepth="5" Opacity="0.15"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.08"/>
+                            </Border.Effect>
+
+                            <ContentPresenter VerticalAlignment="Center" 
+                                      HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="White" Padding="20,0" 
+                BorderBrush="#E8ECF1" BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="50" Height="50" CornerRadius="25" Background="#E8F4FD"
+                            BorderBrush="#1976D2" BorderThickness="2" Margin="0,0,15,0">
+                        <Image Source="/img/icons/user.png" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock x:Name="tbFIO" 
+                                   FontSize="16" FontWeight="Bold" Foreground="#2D3436"/>
+                        <TextBlock x:Name="tbPosition" 
+                                   FontSize="12" Foreground="#636E72"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <TextBlock Grid.Column="1" Text="ГЛАВНОЕ МЕНЮ" 
+                           FontSize="20" FontWeight="Bold" Foreground="#2D3436"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <Button Grid.Column="2" Content="🚪 Выйти" 
+                        Width="100" Height="38"
+                        Click="Back_Click"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding MenuItems}" 
+                  HorizontalAlignment="Center"
+                  Margin="40">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel ItemWidth="240" ItemHeight="180"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Style="{StaticResource MenuCardStyle}"
+                        Command="{Binding Command}"
+                        ToolTip="{Binding Tooltip}">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding Icon}" 
+                                   FontSize="36" 
+                                   HorizontalAlignment="Center" 
+                                   Margin="0,0,0,12"/>
+                                <TextBlock Text="{Binding Title}" 
+                                   FontSize="15" 
+                                   FontWeight="SemiBold" 
+                                   Foreground="#2D3436" 
+                                   HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Page>

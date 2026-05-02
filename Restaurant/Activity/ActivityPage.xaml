@@ -1,0 +1,171 @@
+﻿<Page x:Class="Restaurant.Activity.ActivityPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Restaurant.Activity"
+      xmlns:controls="clr-namespace:Restaurant.Controls"
+      mc:Ignorable="d" 
+      TextElement.FontSize="13"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ActivityPage" Background="White">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+
+        <Style x:Key="FilterLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="FilterComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="MinWidth" Value="150"/>
+            <Setter Property="Margin" Value="0,0,15,0"/>
+            <Setter Property="IsEditable" Value="True"/>
+            <Setter Property="IsTextSearchEnabled" Value="True"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="#E8E8E8"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            <Setter Property="Padding" Value="5,0"/>
+        </Style>
+
+        <Style x:Key="DataGridCellStyle" TargetType="DataGridCell">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <local:EventTypeToColorConverter x:Key="EventTypeToColorConverter"/>
+    </Page.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                   Text="ЖУРНАЛ УЧЕТА ДЕЯТЕЛЬНОСТИ" 
+                   FontSize="24" FontWeight="Bold" 
+                   Margin="0,0,0,20" VerticalAlignment="Center"/>
+
+        <Border Grid.Row="1" Background="#F8F9FA" CornerRadius="8" Padding="15" Margin="0,0,0,20">
+            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+                <TextBlock Text="Дата с:" Style="{StaticResource FilterLabelStyle}"/>
+                <DatePicker x:Name="DateFromPicker" 
+                            SelectedDate="{Binding FilterDateFrom, Mode=TwoWay}"
+                            Width="120" Margin="0,0,15,0"/>
+
+                <TextBlock Text="Дата по:" Style="{StaticResource FilterLabelStyle}"/>
+                <DatePicker x:Name="DateToPicker" 
+                            SelectedDate="{Binding FilterDateTo, Mode=TwoWay}"
+                            Width="120" Margin="0,0,15,0"/>
+
+                <TextBlock Text="Сотрудник:" Style="{StaticResource FilterLabelStyle}"/>
+                <ComboBox x:Name="EmployeeFilterCombo"
+                          ItemsSource="{Binding Employees}"
+                          SelectedItem="{Binding SelectedEmployee}"
+                          DisplayMemberPath="FullName"
+                          Style="{StaticResource FilterComboBoxStyle}"/>
+
+                <TextBlock Text="Тип события:" Style="{StaticResource FilterLabelStyle}"/>
+                <ComboBox x:Name="EventTypeFilterCombo"
+                          ItemsSource="{Binding EventTypes}"
+                          SelectedItem="{Binding SelectedEventType}"
+                          Style="{StaticResource FilterComboBoxStyle}"/>
+
+                <TextBlock Text="Объект:" Style="{StaticResource FilterLabelStyle}"/>
+                <ComboBox x:Name="EntityNameFilterCombo"
+                          ItemsSource="{Binding EntityNames}"
+                          SelectedItem="{Binding SelectedEntityName}"
+                          Style="{StaticResource FilterComboBoxStyle}"/>
+
+                <Button x:Name="ResetFilterButt" 
+                        Content="🔄 Сбросить" 
+                        Width="100" Height="30"
+                        Click="ResetFilterButt_Click"
+                        Style="{StaticResource SecondaryButtonStyle}"/>
+            </WrapPanel>
+        </Border>
+
+        <DataGrid x:Name="LogDataGrid"
+                  Grid.Row="2"
+                  ItemsSource="{Binding FilteredLogs}"  d:ItemsSource="{d:SampleData ItemCount=6}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  AlternatingRowBackground="#F9F9F9"
+                  GridLinesVisibility="Horizontal"
+                  ColumnWidth="*">
+
+            <DataGrid.Columns>
+                <controls:LeftDataGridTextColumn Header="Дата и время" 
+                                     Binding="{Binding EventDate, StringFormat='dd.MM.yyyy HH:mm'}" 
+                                     Width="*" MinWidth="100" MaxWidth="120"/>
+                
+                <controls:CenteredDataGridTextColumn Header="Сотрудник" 
+                                     Binding="{Binding EmployeeFullName}" 
+                                     Width="*" MinWidth="150"/>
+
+                <DataGridTemplateColumn Header="Тип события" Width="*" MinWidth="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="10" 
+                                    Padding="8,3" 
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding EventType}" Value="Добавление">
+                                                <Setter Property="Background" Value="#D4EDDA"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding EventType}" Value="Редактирование">
+                                                <Setter Property="Background" Value="#FFF3CD"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding EventType}" Value="Удаление">
+                                                <Setter Property="Background" Value="#F8D7DA"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding EventType}" Value="Изменение статуса">
+                                                <Setter Property="Background" Value="#CCE5FF"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <TextBlock Text="{Binding EventType}" 
+                                           FontWeight="SemiBold" 
+                                           FontSize="13"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Foreground="{Binding EventType, Converter={StaticResource EventTypeToColorConverter}}"/>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <controls:CenteredDataGridTextColumn Header="Объект" 
+                                     Binding="{Binding EntityName}" 
+                                     Width="*" MinWidth="100"/>
+
+                <controls:LeftDataGridTextColumn Header="Описание" 
+                                     Binding="{Binding Description}" 
+                                     Width="2*" MinWidth="200"/>
+
+                <controls:LeftDataGridTextColumn Header="Детали"
+                                     Binding="{Binding Details}" 
+                                     Width="*" MinWidth="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="⬅️ Назад" Grid.Row="3" 
+Width="100" Height="38"
+Click="Back_Click"
+Style="{StaticResource SecondaryButtonStyle}"
+VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+    </Grid>
+</Page>

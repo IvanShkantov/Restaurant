@@ -1,0 +1,135 @@
+﻿<Window x:Class="Restaurant.Order.EditOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Restaurant.Order"
+        mc:Ignorable="d"
+        Title="EditOrderWindow">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Padding="10" Background="#F5F5F5" CornerRadius="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Сотрудник:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock Grid.Column="1" 
+                           Text="{Binding EmployeeFullName}"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Column="2" Text="Дата:" VerticalAlignment="Center" Margin="20,0,10,0"/>
+                <DatePicker Grid.Column="3" 
+                            SelectedDate="{Binding OrderDate}"
+                            Width="150"/>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10">
+            <Button x:Name="AddItemButt" Content="➕ Добавить блюдо" 
+                    Width="150" Height="30" Click="AddItemButt_Click"/>
+            <TextBlock Text="{Binding EstimatedTotalPrice, StringFormat='Итого: {0:C}'}" 
+                       FontSize="16" FontWeight="Bold" 
+                       Margin="20,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="2" 
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Disabled">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" 
+                        Background="#E8E8E8" 
+                        BorderBrush="#CCCCCC" 
+                        BorderThickness="0,0,0,1"
+                        Padding="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Блюдо" TextAlignment="Center" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Grid.Column="1" Text="Кол-во" TextAlignment="Center" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Grid.Column="2" Text="Цена" TextAlignment="Center" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Grid.Column="3" Text="Сумма" TextAlignment="Center" FontWeight="Bold" Margin="5,0"/>
+                        <TextBlock Grid.Column="4" Text="" FontWeight="Bold"/>
+                    </Grid>
+                </Border>
+
+                <ItemsControl Grid.Row="1" ItemsSource="{Binding Items}" d:ItemsSource="{d:SampleData ItemCount=3}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#E0E0E0" 
+                                    BorderThickness="0,0,0,1"
+                                    Padding="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox x:Name="DishCB" Grid.Column="0"
+                                              ItemsSource="{Binding DataContext.AvailableDishes, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                              SelectedItem="{Binding SelectedDish, UpdateSourceTrigger=PropertyChanged}"
+                                              DisplayMemberPath="Name"
+                                              Margin="0,0,5,0"/>
+
+                                    <TextBox Grid.Column="1"
+                                             Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
+                                             Margin="0,0,5,0"/>
+
+                                    <TextBlock Grid.Column="2" 
+                                               Text="{Binding UnitPrice, StringFormat='C'}"
+                                               VerticalAlignment="Center"
+                                               Margin="5,0"/>
+
+                                    <TextBlock Grid.Column="3" 
+                                               Text="{Binding TotalPrice, StringFormat='C'}"
+                                               VerticalAlignment="Center"
+                                               Margin="5,0"
+                                               FontWeight="Bold"/>
+
+                                    <Button x:Name="DeleteItemButt" Grid.Column="4"
+                                            Content="🗑️"
+                                            DataContext="{Binding}"
+                                            Width="25" Height="25"
+                                            ToolTip="Удалить" Click="DeleteItemButt_Click"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button x:Name="SaveButt" Content="Сохранить" 
+                    Width="120" Height="35"
+                    Style="{StaticResource PrimaryButtonStyle}" Click="SaveButt_Click"/>
+            <Button x:Name="CancelButt" Content="Отмена" 
+                    Width="120" Height="35" Margin="10,0,0,0" Click="CancelButt_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,235 @@
+﻿<Page x:Class="Restaurant.PurchPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Restaurant"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PurchPage" Background="#F8F9FB">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Page.Resources>
+
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Закупки"
+                       FontSize="28"
+                       FontWeight="SemiBold"
+                       DockPanel.Dock="Left"/>
+
+            <Button x:Name="SuppliersButt" Content="📦 Управление поставщиками"
+                    Width="189" Height="40"
+                    DockPanel.Dock="Right"
+                    Style="{StaticResource SecondaryButtonStyle}" Click="SuppliersButt_Click"/>
+
+
+            <Button Content="Добавить"
+                    Width="160" Height="40"
+                    DockPanel.Dock="Right"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Click="AddPurnchButt_Click"/>
+        </DockPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Активные"
+                           FontSize="20"
+                           Grid.Row="0"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,10"/>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Purchases}" d:ItemsSource="{d:SampleData ItemCount=6}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+
+                                <Border Background="White"
+                                        CornerRadius="10"
+                                        Padding="15"
+                                        Margin="0,0,0,12"
+                                        BorderBrush="#E5E7EB"
+                                        BorderThickness="1">
+
+                                    <StackPanel>
+                                        <Grid Margin="0,0,0,10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding SupplierName}"
+                                                           FontWeight="Bold"
+                                                           FontSize="16"/>
+
+                                                <TextBlock Text="{Binding CreatedAt, StringFormat='dd.MM.yyyy HH:mm'}"
+                                                           Foreground="Gray"/>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                <Button Content="✔"
+                                                        Width="32" Height="32"
+                                                        Margin="5"
+                                                        Click="MarkButt_Click"
+                                                        DataContext="{Binding PurchaseID}"/>
+
+                                                <Button Content="✎"
+                                                        Width="32" Height="32"
+                                                        Margin="5"
+                                                        Click="EditPurnchButt_Click"
+                                                        DataContext="{Binding PurchaseID}"/>
+
+                                                <Button Content="✖"
+                                                        Width="32" Height="32"
+                                                        Margin="5"
+                                                        Click="DeleteBtn_Click"
+                                                        DataContext="{Binding PurchaseID}"/>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <Grid Margin="0,0,0,10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Text="{Binding EmployeeFullName}"/>
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding StatusText}"
+                                                       HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding TotalPurchasePrice, StringFormat='C'}"
+                                                       FontWeight="Bold"
+                                                       Foreground="#3B82F6"
+                                                       HorizontalAlignment="Right"/>
+                                        </Grid>
+
+                                        <DataGrid ItemsSource="{Binding Items}"
+                                                  AutoGenerateColumns="False"
+                                                  HeadersVisibility="Column"
+                                                  IsReadOnly="True"
+                                                  RowHeight="30"
+                                                  FontSize="13">
+
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Продукт" Binding="{Binding ProductName}" Width="*"/>
+                                                <DataGridTextColumn Header="Кол-во" Binding="{Binding Quantity}" Width="80"/>
+                                                <DataGridTextColumn Header="Цена" Binding="{Binding UnitPrice}" Width="100"/>
+                                                <DataGridTextColumn Header="Сумма" Binding="{Binding TotalPrice}" Width="100"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Доставленные"
+                           FontSize="20"
+                           Grid.Row="0"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,10"/>
+
+                <ScrollViewer Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding Delivered}" d:ItemsSource="{d:SampleData ItemCount=6}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="White"
+                CornerRadius="10"
+                Padding="15"
+                Margin="0,0,0,12"
+                BorderBrush="#E5E7EB"
+                BorderThickness="1">
+
+                                    <StackPanel>
+                                        <Grid Margin="0,0,0,10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding SupplierName}"
+                                   FontWeight="Bold"
+                                   FontSize="16"/>
+
+                                                <TextBlock Text="{Binding ClosedAt, StringFormat='dd.MM.yyyy HH:mm'}"
+                                   Foreground="Gray"/>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <Grid Margin="0,0,0,10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Text="{Binding EmployeeFullName}"/>
+                                            <TextBlock Grid.Column="1"
+                               Text="{Binding StatusText}"
+                               HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="2"
+                               Text="{Binding TotalPurchasePrice, StringFormat='C'}"
+                               FontWeight="Bold"
+                               Foreground="#3B82F6"
+                               HorizontalAlignment="Right"/>
+                                        </Grid>
+
+                                        <DataGrid ItemsSource="{Binding Items}"
+                          AutoGenerateColumns="False"
+                          HeadersVisibility="Column"
+                          IsReadOnly="True"
+                          RowHeight="30"
+                          FontSize="13">
+
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Продукт" Binding="{Binding ProductName}" Width="*"/>
+                                                <DataGridTextColumn Header="Кол-во" Binding="{Binding Quantity}" Width="80"/>
+                                                <DataGridTextColumn Header="Цена" Binding="{Binding UnitPrice}" Width="100"/>
+                                                <DataGridTextColumn Header="Сумма" Binding="{Binding TotalPrice}" Width="100"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <Button Content="⬅️ Назад" Grid.Row="2" 
+Width="100" Height="38"
+Click="Back_Click"
+Style="{StaticResource SecondaryButtonStyle}"
+VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Page>
