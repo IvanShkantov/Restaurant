@@ -83,7 +83,7 @@
                            FontSize="20" FontWeight="Bold" Foreground="#2D3436"
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                <Button Grid.Column="2" Content="🚪 Выйти" 
+                <Button Grid.Column="2" Content="🏠 Выйти" 
                         Width="100" Height="38"
                         Click="Back_Click"
                         Style="{StaticResource SecondaryButtonStyle}"

@@ -72,31 +72,6 @@ namespace Restaurant.Reports
             }
         }
 
-        private void SaveDocx_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new Microsoft.Win32.SaveFileDialog
-            {
-                Filter = "Word Document (*.docx)|*.docx|All files (*.*)|*.*",
-                FileName = $"Отчет_{DateTime.Now:dd.MM.yyyy}.docx"
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                try
-                {
-                    var xaml = System.Windows.Markup.XamlWriter.Save(_document);
-
-                    File.WriteAllText(dialog.FileName, xaml);
-
-                    MessageBox.Show("Отчет сохранен. Для полноценного формата DOCX требуется установка OpenXML SDK.",
-                        "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка сохранения: {ex.Message}", "Ошибка");
-                }
-            }
-        }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {

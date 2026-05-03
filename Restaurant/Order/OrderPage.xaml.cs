@@ -151,7 +151,7 @@ namespace Restaurant.Order
         private void NextStatusButt_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var orderId = (int)button?.DataContext;
+            var orderId = (int)button?.Tag;
 
             using (var context = new RestaurantEntities())
             {

@@ -76,7 +76,8 @@ namespace Restaurant.Menu
                     Icon = "🚚",
                     Title = "Закупки",
                     Tooltip = "Оформление закупок",
-                    Command = new RelayCommand(() => NavigationService?.Navigate(new PurchPage(_session)))
+                    Command = new RelayCommand(() => 
+                        NavigationService?.Navigate(new PurchPage(_session)))
                 });
             }
 

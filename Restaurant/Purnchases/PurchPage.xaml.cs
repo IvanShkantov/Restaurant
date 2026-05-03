@@ -137,7 +137,7 @@ namespace Restaurant
         private void EditPurnchButt_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var purchaseId = (int)button?.DataContext;            
+            var purchaseId = (int)button?.Tag;            
 
             var window = new EditPurchaseWindow(user, purchaseId);
             window.Owner = Application.Current.MainWindow;
@@ -162,7 +162,7 @@ namespace Restaurant
         private void MarkButt_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var purchaseId = (int)button?.DataContext;
+            var purchaseId = (int)button?.Tag;
 
             using (var context = new RestaurantEntities())
             {
@@ -192,7 +192,7 @@ namespace Restaurant
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var purchaseId = (int)button?.DataContext;
+            var purchaseId = (int)button?.Tag;
 
             var result = MessageBox.Show(
                 "Вы уверены, что хотите отменить поставку?",

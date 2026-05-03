@@ -8,41 +8,16 @@
       mc:Ignorable="d" 
       TextElement.FontSize="13"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ActivityPage" Background="White">
+      Title="ActivityPage" Background="#F8FAFC">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-
-        <Style x:Key="FilterLabelStyle" TargetType="TextBlock">
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Margin" Value="0,0,5,0"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-
-        <Style x:Key="FilterComboBoxStyle" TargetType="ComboBox">
-            <Setter Property="MinWidth" Value="150"/>
-            <Setter Property="Margin" Value="0,0,15,0"/>
-            <Setter Property="IsEditable" Value="True"/>
-            <Setter Property="IsTextSearchEnabled" Value="True"/>
-        </Style>
-
-        <Style TargetType="DataGridColumnHeader">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Background" Value="#E8E8E8"/>
-            <Setter Property="BorderBrush" Value="#CCCCCC"/>
-            <Setter Property="BorderThickness" Value="0,0,1,1"/>
-            <Setter Property="Padding" Value="5,0"/>
-        </Style>
-
-        <Style x:Key="DataGridCellStyle" TargetType="DataGridCell">
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-        </Style>
+        <DropShadowEffect x:Key="HeaderShadow" BlurRadius="20" ShadowDepth="0" Opacity="0.05"/>
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="12" ShadowDepth="2" Opacity="0.06"/>
 
         <local:EventTypeToColorConverter x:Key="EventTypeToColorConverter"/>
     </Page.Resources>
 
-    <Grid Margin="20">
+    <Grid Margin="25">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -50,122 +25,267 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" 
-                   Text="ЖУРНАЛ УЧЕТА ДЕЯТЕЛЬНОСТИ" 
-                   FontSize="24" FontWeight="Bold" 
-                   Margin="0,0,0,20" VerticalAlignment="Center"/>
+        <Border Grid.Row="0" Margin="0,0,0,18" Background="White" CornerRadius="16" Padding="20" Effect="{StaticResource HeaderShadow}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Журнал учёта деятельности" FontSize="26" FontWeight="Bold" 
+                           Foreground="#1E293B" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
 
-        <Border Grid.Row="1" Background="#F8F9FA" CornerRadius="8" Padding="15" Margin="0,0,0,20">
-            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <Border Grid.Row="1" Background="White" CornerRadius="14" Padding="18" Margin="0,0,0,14" Effect="{StaticResource CardShadow}">
+            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" ItemHeight="40">
 
-                <TextBlock Text="Дата с:" Style="{StaticResource FilterLabelStyle}"/>
-                <DatePicker x:Name="DateFromPicker" 
-                            SelectedDate="{Binding FilterDateFrom, Mode=TwoWay}"
-                            Width="120" Margin="0,0,15,0"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                    <TextBlock Text="Дата с" FontWeight="SemiBold" 
+                               Foreground="#64748B" FontSize="12" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <DatePicker x:Name="DateFromPicker" 
+                                SelectedDate="{Binding FilterDateFrom, Mode=TwoWay}"
+                                Width="130" FontSize="13"/>
+                </StackPanel>
 
-                <TextBlock Text="Дата по:" Style="{StaticResource FilterLabelStyle}"/>
-                <DatePicker x:Name="DateToPicker" 
-                            SelectedDate="{Binding FilterDateTo, Mode=TwoWay}"
-                            Width="120" Margin="0,0,15,0"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                    <TextBlock Text="Дата по" FontWeight="SemiBold" 
+                               Foreground="#64748B" FontSize="12" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <DatePicker x:Name="DateToPicker" 
+                                SelectedDate="{Binding FilterDateTo, Mode=TwoWay}"
+                                Width="130" FontSize="13"/>
+                </StackPanel>
 
-                <TextBlock Text="Сотрудник:" Style="{StaticResource FilterLabelStyle}"/>
-                <ComboBox x:Name="EmployeeFilterCombo"
-                          ItemsSource="{Binding Employees}"
-                          SelectedItem="{Binding SelectedEmployee}"
-                          DisplayMemberPath="FullName"
-                          Style="{StaticResource FilterComboBoxStyle}"/>
+                <Border Width="1" Background="#E2E8F0" Margin="4,6,16,6"/>
 
-                <TextBlock Text="Тип события:" Style="{StaticResource FilterLabelStyle}"/>
-                <ComboBox x:Name="EventTypeFilterCombo"
-                          ItemsSource="{Binding EventTypes}"
-                          SelectedItem="{Binding SelectedEventType}"
-                          Style="{StaticResource FilterComboBoxStyle}"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                    <TextBlock Text="Сотрудник" FontWeight="SemiBold" 
+                               Foreground="#64748B" FontSize="12" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="EmployeeFilterCombo"
+                              ItemsSource="{Binding Employees}"
+                              SelectedItem="{Binding SelectedEmployee}"
+                              DisplayMemberPath="FullName"
+                              Width="170"
+                              IsEditable="True"
+                              IsTextSearchEnabled="True"
+                              FontSize="13"
+                              Padding="8,6"
+                              Background="#F8FAFC"
+                              BorderBrush="#E2E8F0"
+                              BorderThickness="1">
+                        <ComboBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="8"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
+                </StackPanel>
 
-                <TextBlock Text="Объект:" Style="{StaticResource FilterLabelStyle}"/>
-                <ComboBox x:Name="EntityNameFilterCombo"
-                          ItemsSource="{Binding EntityNames}"
-                          SelectedItem="{Binding SelectedEntityName}"
-                          Style="{StaticResource FilterComboBoxStyle}"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                    <TextBlock Text="Тип события" FontWeight="SemiBold" 
+                               Foreground="#64748B" FontSize="12" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="EventTypeFilterCombo"
+                              ItemsSource="{Binding EventTypes}"
+                              SelectedItem="{Binding SelectedEventType}"
+                              Width="150"
+                              FontSize="13"
+                              Padding="8,6"
+                              Background="#F8FAFC"
+                              BorderBrush="#E2E8F0"
+                              BorderThickness="1">
+                        <ComboBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="8"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                    <TextBlock Text="Объект" FontWeight="SemiBold" 
+                               Foreground="#64748B" FontSize="12" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="EntityNameFilterCombo"
+                              ItemsSource="{Binding EntityNames}"
+                              SelectedItem="{Binding SelectedEntityName}"
+                              Width="140"
+                              FontSize="13"
+                              Padding="8,6"
+                              Background="#F8FAFC"
+                              BorderBrush="#E2E8F0"
+                              BorderThickness="1">
+                        <ComboBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="8"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
+                </StackPanel>
 
                 <Button x:Name="ResetFilterButt" 
-                        Content="🔄 Сбросить" 
-                        Width="100" Height="30"
+                        Content="↺  Сбросить"
+                        Height="38" Padding="14,0"
                         Click="ResetFilterButt_Click"
-                        Style="{StaticResource SecondaryButtonStyle}"/>
+                        Background="#F1F5F9"
+                        Foreground="#64748B"
+                        BorderThickness="0"
+                        FontWeight="SemiBold"
+                        FontSize="13"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="9"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
             </WrapPanel>
         </Border>
 
-        <DataGrid x:Name="LogDataGrid"
-                  Grid.Row="2"
-                  ItemsSource="{Binding FilteredLogs}"  d:ItemsSource="{d:SampleData ItemCount=6}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  AlternatingRowBackground="#F9F9F9"
-                  GridLinesVisibility="Horizontal"
-                  ColumnWidth="*">
+        <Border Grid.Row="2" Background="White" CornerRadius="14" Effect="{StaticResource CardShadow}" Padding="0">
+            <DataGrid x:Name="LogDataGrid"
+                      ItemsSource="{Binding FilteredLogs}"  
+                      d:ItemsSource="{d:SampleData ItemCount=6}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      Background="White"
+                      RowBackground="White"
+                      AlternatingRowBackground="#F8FAFC"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalGridLinesBrush="#E2E8F0"
+                      BorderThickness="0"
+                      ColumnWidth="*"
+                      RowHeight="44"
+                      CanUserResizeRows="False"
+                      HeadersVisibility="Column">
 
-            <DataGrid.Columns>
-                <controls:LeftDataGridTextColumn Header="Дата и время" 
-                                     Binding="{Binding EventDate, StringFormat='dd.MM.yyyy HH:mm'}" 
-                                     Width="*" MinWidth="100" MaxWidth="120"/>
-                
-                <controls:CenteredDataGridTextColumn Header="Сотрудник" 
-                                     Binding="{Binding EmployeeFullName}" 
-                                     Width="*" MinWidth="150"/>
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="FontSize" Value="11"/>
+                        <Setter Property="Foreground" Value="#94A3B8"/>
+                        <Setter Property="Background" Value="#F8FAFC"/>
+                        <Setter Property="BorderBrush" Value="#E2E8F0"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="Padding" Value="14,10"/>
+                        <Setter Property="Height" Value="44"/>
+                    </Style>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="14,8"/>
+                        <Setter Property="FontSize" Value="13"/>
+                        <Setter Property="Foreground" Value="#334155"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                    </Style>
+                </DataGrid.Resources>
 
-                <DataGridTemplateColumn Header="Тип события" Width="*" MinWidth="120">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Border CornerRadius="10" 
-                                    Padding="8,3" 
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch">
-                                <Border.Style>
-                                    <Style TargetType="Border">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding EventType}" Value="Добавление">
-                                                <Setter Property="Background" Value="#D4EDDA"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding EventType}" Value="Редактирование">
-                                                <Setter Property="Background" Value="#FFF3CD"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding EventType}" Value="Удаление">
-                                                <Setter Property="Background" Value="#F8D7DA"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding EventType}" Value="Изменение статуса">
-                                                <Setter Property="Background" Value="#CCE5FF"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
-                                <TextBlock Text="{Binding EventType}" 
-                                           FontWeight="SemiBold" 
-                                           FontSize="13"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Foreground="{Binding EventType, Converter={StaticResource EventTypeToColorConverter}}"/>
-                            </Border>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGrid.Columns>
+                    <controls:LeftDataGridTextColumn Header="ДАТА И ВРЕМЯ" 
+                                         Binding="{Binding EventDate, StringFormat='dd.MM.yyyy HH:mm'}" 
+                                         Width="*" MinWidth="110" MaxWidth="130">
+                        <controls:LeftDataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontWeight" Value="Medium"/>
+                                <Setter Property="Foreground" Value="#475569"/>
+                            </Style>
+                        </controls:LeftDataGridTextColumn.ElementStyle>
+                    </controls:LeftDataGridTextColumn>
 
-                <controls:CenteredDataGridTextColumn Header="Объект" 
-                                     Binding="{Binding EntityName}" 
-                                     Width="*" MinWidth="100"/>
+                    <controls:CenteredDataGridTextColumn Header="СОТРУДНИК" 
+                                         Binding="{Binding EmployeeFullName}" 
+                                         Width="*" MinWidth="140">
+                        <controls:CenteredDataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="Foreground" Value="#1E293B"/>
+                            </Style>
+                        </controls:CenteredDataGridTextColumn.ElementStyle>
+                    </controls:CenteredDataGridTextColumn>
 
-                <controls:LeftDataGridTextColumn Header="Описание" 
-                                     Binding="{Binding Description}" 
-                                     Width="2*" MinWidth="200"/>
+                    <DataGridTemplateColumn Header="ТИП СОБЫТИЯ" Width="*" MinWidth="130">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border CornerRadius="16" 
+                                        Padding="12,5" 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding EventType}" Value="Добавление">
+                                                    <Setter Property="Background" Value="#D1FAE5"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding EventType}" Value="Редактирование">
+                                                    <Setter Property="Background" Value="#FEF3C7"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding EventType}" Value="Удаление">
+                                                    <Setter Property="Background" Value="#FEE2E2"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding EventType}" Value="Изменение статуса">
+                                                    <Setter Property="Background" Value="#DBEAFE"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <TextBlock Text="{Binding EventType}" 
+                                               FontWeight="SemiBold" 
+                                               FontSize="12"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Foreground="{Binding EventType, Converter={StaticResource EventTypeToColorConverter}}"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                <controls:LeftDataGridTextColumn Header="Детали"
-                                     Binding="{Binding Details}" 
-                                     Width="*" MinWidth="100"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Content="⬅️ Назад" Grid.Row="3" 
-Width="100" Height="38"
-Click="Back_Click"
-Style="{StaticResource SecondaryButtonStyle}"
-VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                    <controls:CenteredDataGridTextColumn Header="ОБЪЕКТ" 
+                                         Binding="{Binding EntityName}" 
+                                         Width="*" MinWidth="110">
+                        <controls:CenteredDataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontWeight" Value="Medium"/>
+                            </Style>
+                        </controls:CenteredDataGridTextColumn.ElementStyle>
+                    </controls:CenteredDataGridTextColumn>
+
+                    <controls:LeftDataGridTextColumn Header="ОПИСАНИЕ" 
+                                         Binding="{Binding Description}" 
+                                         Width="2*" MinWidth="180">
+                        <controls:LeftDataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                                <Setter Property="Foreground" Value="#475569"/>
+                            </Style>
+                        </controls:LeftDataGridTextColumn.ElementStyle>
+                    </controls:LeftDataGridTextColumn>
+
+                    <controls:LeftDataGridTextColumn Header="ДЕТАЛИ"
+                                         Binding="{Binding Details}" 
+                                         Width="*" MinWidth="100">
+                        <controls:LeftDataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                                <Setter Property="Foreground" Value="#64748B"/>
+                                <Setter Property="FontSize" Value="12"/>
+                            </Style>
+                        </controls:LeftDataGridTextColumn.ElementStyle>
+                    </controls:LeftDataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Border Grid.Row="3" Margin="0,18,0,0">
+            <Button Content="←  Назад"
+                    Height="40" Width="110"
+                    HorizontalAlignment="Right"
+                    Click="Back_Click"
+                    Background="White"
+                    Foreground="#64748B"
+                    BorderBrush="#E2E8F0"
+                    BorderThickness="1"
+                    FontWeight="SemiBold"
+                    Cursor="Hand">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Border>
     </Grid>
 </Page>

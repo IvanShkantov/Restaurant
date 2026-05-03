@@ -6,220 +6,372 @@
       xmlns:local="clr-namespace:Restaurant.Order"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="OrderPage" Background="White">
+      Title="OrderPage" Background="#F8FAFC">
 
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <DropShadowEffect x:Key="HeaderShadow" BlurRadius="20" ShadowDepth="0" Opacity="0.05"/>
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="12" ShadowDepth="2" Opacity="0.06"/>
 
         <Style x:Key="StatusBadgeStyle" TargetType="Border">
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Padding" Value="10,3"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </Page.Resources>
 
-    <Grid Margin="20">
+    <Grid Margin="25">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <Grid Grid.Row="0" Margin="0,0,0,20">
-            <TextBlock Text="ЗАКАЗЫ" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
-            <Button x:Name="AddOrderButt" Content="➕ Создать заказ" 
-                    Style="{StaticResource PrimaryButtonStyle}"
-                    Width="180" Height="35" HorizontalAlignment="Right" Click="AddOrderButt_Click"/>
-        </Grid>
 
-        <TextBlock Text="Активные" TextAlignment="Center" Grid.Row="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+        <Border Grid.Row="0" Margin="0,0,0,22" Background="White" CornerRadius="16" Padding="20" Effect="{StaticResource HeaderShadow}">
+            <Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Заказы" FontSize="28" FontWeight="Bold" 
+                               Foreground="#1E293B" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button x:Name="AddOrderButt" 
+                        Content="➕  Создать заказ"
+                        Height="42" Padding="20,0"
+                        HorizontalAlignment="Right"
+                        Click="AddOrderButt_Click"
+                        Background="#3B82F6"
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontWeight="SemiBold"
+                        FontSize="14"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Background="#EFF6FF" CornerRadius="12" Padding="14,10" Margin="0,0,0,18">
+            <TextBlock Text="Активные заказы" FontSize="18" FontWeight="Bold" 
+                       Foreground="#1E40AF" HorizontalAlignment="Center"/>
+        </Border>
 
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding ActiveOrders}" d:ItemsSource="{d:SampleData ItemCount=3}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Expander Margin="0,0,0,10" IsExpanded="False">
-                            <Expander.Header>
-                                <Border Background="#F5F5F5" CornerRadius="8" Padding="15">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="100"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="150"/>
-                                            <ColumnDefinition Width="120"/>
-                                            <ColumnDefinition Width="120"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
+                        <Border Margin="0,0,0,12" Background="White" CornerRadius="14" 
+                                Effect="{StaticResource CardShadow}" Padding="0">
+                            <Expander IsExpanded="False" BorderThickness="0">
+                                <Expander.Header >
+                                    <Border Padding="50,14" CornerRadius="14" Background="Transparent" 
+                                            HorizontalAlignment="Stretch" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Expander}, Path=ActualWidth}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="0">
-                                            <Border.Style>
-                                                <Style TargetType="Border" BasedOn="{StaticResource StatusBadgeStyle}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Status}" Value="Created">
-                                                            <Setter Property="Background" Value="#FFF3CD"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Status}" Value="Processing">
-                                                            <Setter Property="Background" Value="#CCE5FF"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Status}" Value="Ready">
-                                                            <Setter Property="Background" Value="#D4EDDA"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                            <TextBlock Text="{Binding StatusText}" FontWeight="SemiBold" FontSize="12"/>
-                                        </Border>
+                                            <Border Grid.Column="0">
+                                                <Border.Style>
+                                                    <Style TargetType="Border" BasedOn="{StaticResource StatusBadgeStyle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Status}" Value="Created">
+                                                                <Setter Property="Background" Value="#FEF3C7"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Status}" Value="Processing">
+                                                                <Setter Property="Background" Value="#DBEAFE"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Status}" Value="Ready">
+                                                                <Setter Property="Background" Value="#D1FAE5"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <TextBlock Text="{Binding StatusText}" FontWeight="SemiBold" FontSize="12"
+                                                           Foreground="#1E293B"/>
+                                            </Border>
 
-                                        <TextBlock Grid.Column="1" 
-                                                   Text="{Binding CreatedAt, StringFormat='dd.MM.yyyy HH:mm'}"
-                                                   FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                            <TextBlock Grid.Column="1" 
+                                                       Text="{Binding CreatedAt, StringFormat='dd.MM.yyyy HH:mm'}"
+                                                       FontWeight="SemiBold" FontSize="13"
+                                                       Foreground="#475569"
+                                                       VerticalAlignment="Center" Margin="18,0,0,0"/>
 
-                                        <TextBlock Grid.Column="2" 
-                                                   Text="{Binding EmployeeFullName}"
-                                                   Margin="20,0,0,0" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="2" 
+                                                       Text="{Binding EmployeeFullName}"
+                                                       FontSize="13" Foreground="#64748B"
+                                                       Margin="20,0,0,0" VerticalAlignment="Center"/>
 
-                                        <TextBlock Grid.Column="3" 
-                                                   Text="{Binding ItemsCount, StringFormat='Позиций: {0}'}"
-                                                   VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="3" 
+                                                       Text="{Binding ItemsCount, StringFormat='Позиций: {0}'}"
+                                                       FontSize="13" Foreground="#64748B"
+                                                       VerticalAlignment="Center" Margin="0,0,16,0"/>
 
-                                        <TextBlock Grid.Column="4" 
-                                                   Text="{Binding TotalOrderPrice, StringFormat='C'}"
-                                                   FontWeight="Bold" Foreground="#007BFF"
-                                                   VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="4" 
+                                                       Text="{Binding TotalOrderPrice, StringFormat='C'}"
+                                                       FontWeight="Bold" FontSize="16"
+                                                       Foreground="#3B82F6"
+                                                       VerticalAlignment="Center" Margin="0,0,18,0"/>
 
-                                        <StackPanel Grid.Column="6" Orientation="Horizontal">
-                                            <Button x:Name="NextStatusButt" 
-                                                    Width="35" Height="35" Margin="5,0"
-                                                    DataContext="{Binding OrderID}"
+                                            <StackPanel Grid.Column="5" Orientation="Horizontal">
+                                                <Button x:Name="NextStatusButt" 
+                                                    Width="36" Height="36" Margin="0,0,4,0"
+                                                    Tag="{Binding OrderID}"
                                                     Content="{Binding NextStatusIcon}"
                                                     ToolTip="{Binding NextStatusTooltip}" 
-                                                    Click="NextStatusButt_Click"/>
+                                                    Click="NextStatusButt_Click"
+                                                    Background="#EFF6FF"
+                                                    Foreground="#3B82F6"
+                                                    BorderThickness="0"
+                                                    FontSize="14"
+                                                    Cursor="Hand">
+                                                    <Button.Resources>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="CornerRadius" Value="9"/>
+                                                        </Style>
+                                                    </Button.Resources>
+                                                </Button>
 
+                                                <Button x:Name="EditOrderButt" 
+                                                        Content="✏️"
+                                                        Width="36" Height="36" Margin="0,0,4,0"
+                                                        DataContext="{Binding OrderID}"
+                                                        ToolTip="Редактировать" 
+                                                        Click="EditOrderButt_Click"
+                                                        Background="#F1F5F9"
+                                                        Foreground="#475569"
+                                                        BorderThickness="0"
+                                                        FontSize="14"
+                                                        Cursor="Hand">
+                                                    <Button.Resources>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="CornerRadius" Value="9"/>
+                                                        </Style>
+                                                    </Button.Resources>
+                                                </Button>
 
-                                            <Button x:Name="EditOrderButt" Content="✏️" 
-                                                    Width="35" Height="35" Margin="5,0"
-                                                    DataContext="{Binding OrderID}"
-                                                    ToolTip="Редактировать" Click="EditOrderButt_Click"/>
+                                                <Button x:Name="CancelOrderButt" 
+                                                        Width="36" Height="36"
+                                                        DataContext="{Binding OrderID}" 
+                                                        ToolTip="Отменить заказ" 
+                                                        Click="CancelOrderButt_Click"
+                                                        Background="#FEE2E2"
+                                                        BorderThickness="0"
+                                                        Cursor="Hand">
+                                                    <Button.Resources>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="CornerRadius" Value="9"/>
+                                                        </Style>
+                                                    </Button.Resources>
+                                                    <Image Source="/img/icons/remove.png" Width="16" Height="16"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </Expander.Header>
 
-                                            <Button x:Name="CancelOrderButt" Width="35" Height="35" Margin="5,0" 
-                                                    DataContext="{Binding OrderID}" ToolTip="Отменить заказ" Click="CancelOrderButt_Click">
-                                                <Image Source="/img/icons/remove.png" Width="20"/>
-                                            </Button>
-                                        </StackPanel>
-                                    </Grid>
+                                <Border Background="#F8FAFC" CornerRadius="0,0,14,14" Padding="16">
+                                    <DataGrid ItemsSource="{Binding Items}" 
+                                              AutoGenerateColumns="False"
+                                              IsReadOnly="True"
+                                              HeadersVisibility="Column"
+                                              Background="White"
+                                              RowBackground="White"
+                                              AlternatingRowBackground="#F8FAFC"
+                                              BorderThickness="0"
+                                              GridLinesVisibility="Horizontal"
+                                              HorizontalGridLinesBrush="#E2E8F0">
+                                        <DataGrid.Resources>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="Background" Value="White"/>
+                                                <Setter Property="Foreground" Value="#64748B"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="Padding" Value="12,10"/>
+                                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                <Setter Property="BorderBrush" Value="#E2E8F0"/>
+                                            </Style>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="Margin" Value="12,10"/>
+                                                <Setter Property="FontSize" Value="13"/>
+                                                <Setter Property="Foreground" Value="#334155"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                            </Style>
+                                        </DataGrid.Resources>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Блюдо" 
+                                                                Binding="{Binding DishName}" 
+                                                                Width="*"/>
+                                            <DataGridTextColumn Header="Количество" 
+                                                                Binding="{Binding Quantity, StringFormat='N0'}" 
+                                                                Width="100"/>
+                                            <DataGridTextColumn Header="Цена за ед." 
+                                                                Binding="{Binding UnitPrice, StringFormat='C'}"
+                                                                Width="130"/>
+                                            <DataGridTextColumn Header="Сумма" 
+                                                                Binding="{Binding TotalPrice, StringFormat='C'}"
+                                                                Width="130">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                                        <Setter Property="Foreground" Value="#3B82F6"/>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
                                 </Border>
-                            </Expander.Header>
-
-                            <Border BorderBrush="#DDD" BorderThickness="1,0,1,1" CornerRadius="0,0,8,8">
-                                <DataGrid ItemsSource="{Binding Items}" 
-                                          AutoGenerateColumns="False"
-                                          IsReadOnly="True"
-                                          HeadersVisibility="Column"
-                                          Margin="10">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Блюдо" 
-                                                            Binding="{Binding DishName}" 
-                                                            Width="*"/>
-                                        <DataGridTextColumn Header="Количество" 
-                                                            Binding="{Binding Quantity, StringFormat='N0'}" 
-                                                            Width="100"/>
-                                        <DataGridTextColumn Header="Цена за ед." 
-                                                            Binding="{Binding UnitPrice, StringFormat='C'}" 
-                                                            Width="120"/>
-                                        <DataGridTextColumn Header="Сумма" 
-                                                            Binding="{Binding TotalPrice, StringFormat='C'}" 
-                                                            Width="120"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </Border>
-                        </Expander>
+                            </Expander>
+                        </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
 
-        <TextBlock Text="Завершённые" TextAlignment="Center" Grid.Row="3" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+        <Border Grid.Row="3" Background="#F0FDF4" CornerRadius="12" Padding="14,10" Margin="0,18,0,18">
+            <TextBlock Text="✅ Завершённые заказы" FontSize="18" FontWeight="Bold" 
+                       Foreground="#166534" HorizontalAlignment="Center"/>
+        </Border>
 
         <ScrollViewer Grid.Row="4" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding CompletedOrders}" d:ItemsSource="{d:SampleData ItemCount=3}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Expander Margin="0,0,0,10" IsExpanded="False">
-                            <Expander.Header>
-                                <Border Background="#F5F5F5" CornerRadius="8" Padding="15">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100"/>
-                                            <ColumnDefinition Width="100"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="150"/>
-                                            <ColumnDefinition Width="120"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
+                        <Border Margin="0,0,0,12" Background="White" CornerRadius="14" 
+                                Effect="{StaticResource CardShadow}" Padding="0">
+                            <Expander IsExpanded="False" BorderThickness="0">
+                                <Expander.Header>
+                                    <Border Padding="50,14" CornerRadius="14" Background="Transparent"
+                                            HorizontalAlignment="Stretch" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Expander}, Path=ActualWidth}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
 
-                                        <TextBlock Grid.Column="0" 
-                                                   Text="{Binding CreatedAt, StringFormat='dd.MM.yyyy HH:mm'}"
-                                                   FontWeight="Bold" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" 
+                                                       Text="{Binding ClosedAt, StringFormat='dd.MM.yyyy HH:mm'}"
+                                                       FontWeight="SemiBold" FontSize="13"
+                                                       Foreground="#475569"
+                                                       VerticalAlignment="Center" Margin="18,0,0,0"/>
 
-                                        <TextBlock Grid.Column="1" 
-                                                   Text="{Binding ClosedAt, StringFormat='dd.MM.yyyy HH:mm'}"
-                                                   FontWeight="Bold" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="2" 
+                                                       Text="{Binding EmployeeFullName}"
+                                                       FontSize="13" Foreground="#64748B"
+                                                       Margin="20,0,0,0" VerticalAlignment="Center"/>
 
-                                        <TextBlock Grid.Column="2" 
-                                                   Text="{Binding EmployeeFullName}"
-                                                   Margin="20,0,0,0" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="3" 
+                                                       Text="{Binding ItemsCount, StringFormat='Позиций: {0}'}"
+                                                       FontSize="13" Foreground="#64748B"
+                                                       VerticalAlignment="Center" Margin="0,0,16,0"/>
 
-                                        <TextBlock Grid.Column="3" 
-                                                   Text="{Binding ItemsCount, StringFormat='Позиций: {0}'}"
-                                                   VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="4" 
+                                                       Text="{Binding TotalOrderPrice, StringFormat='C'}"
+                                                       FontWeight="Bold" FontSize="16"
+                                                       Foreground="#10B981"
+                                                       VerticalAlignment="Center" Margin="0,0,18,0"/>
 
-                                        <TextBlock Grid.Column="4" 
-                                                   Text="{Binding TotalOrderPrice, StringFormat='C'}"
-                                                   FontWeight="Bold" Foreground="#28A745"
-                                                   VerticalAlignment="Center"/>
+                                            <Border Grid.Column="5" 
+                                                    Background="#D1FAE5" 
+                                                    CornerRadius="20" 
+                                                    Padding="14,6">
+                                                <TextBlock Text="✅ Завершён" FontWeight="SemiBold" 
+                                                           FontSize="12" Foreground="#065F46"/>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </Expander.Header>
 
-                                        <Border Grid.Column="5" Background="#D4EDDA" CornerRadius="12" Padding="10,3">
-                                            <TextBlock Text="✅ Завершён" FontWeight="SemiBold" FontSize="12" Foreground="#155724"/>
-                                        </Border>
-                                    </Grid>
+                                <Border Background="#F8FAFC" CornerRadius="0,0,14,14" Padding="16">
+                                    <DataGrid ItemsSource="{Binding Items}" 
+                                              AutoGenerateColumns="False"
+                                              IsReadOnly="True"
+                                              HeadersVisibility="Column"
+                                              Background="White"
+                                              RowBackground="White"
+                                              AlternatingRowBackground="#F8FAFC"
+                                              BorderThickness="0"
+                                              GridLinesVisibility="Horizontal"
+                                              HorizontalGridLinesBrush="#E2E8F0">
+                                        <DataGrid.Resources>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="Background" Value="White"/>
+                                                <Setter Property="Foreground" Value="#64748B"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="Padding" Value="12,10"/>
+                                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                <Setter Property="BorderBrush" Value="#E2E8F0"/>
+                                            </Style>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="Margin" Value="12,10"/>
+                                                <Setter Property="FontSize" Value="13"/>
+                                                <Setter Property="Foreground" Value="#334155"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                            </Style>
+                                        </DataGrid.Resources>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Блюдо" 
+                                                                Binding="{Binding DishName}" 
+                                                                Width="*"/>
+                                            <DataGridTextColumn Header="Количество" 
+                                                                Binding="{Binding Quantity, StringFormat='N0'}" 
+                                                                Width="100"/>
+                                            <DataGridTextColumn Header="Цена за ед." 
+                                                                Binding="{Binding UnitPrice, StringFormat='C'}"
+                                                                Width="130"/>
+                                            <DataGridTextColumn Header="Сумма" 
+                                                                Binding="{Binding TotalPrice, StringFormat='C'}"
+                                                                Width="130">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                                        <Setter Property="Foreground" Value="#10B981"/>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
                                 </Border>
-                            </Expander.Header>
-
-                            <Border BorderBrush="#DDD" BorderThickness="1,0,1,1" CornerRadius="0,0,8,8">
-                                <DataGrid ItemsSource="{Binding Items}" 
-                                          AutoGenerateColumns="False"
-                                          IsReadOnly="True"
-                                          HeadersVisibility="Column"
-                                          Margin="10">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Блюдо" 
-                                                            Binding="{Binding DishName}" 
-                                                            Width="*"/>
-                                        <DataGridTextColumn Header="Количество" 
-                                                            Binding="{Binding Quantity, StringFormat='N0'}" 
-                                                            Width="100"/>
-                                        <DataGridTextColumn Header="Цена за ед." 
-                                                            Binding="{Binding UnitPrice, StringFormat='C'}" 
-                                                            Width="120"/>
-                                        <DataGridTextColumn Header="Сумма" 
-                                                            Binding="{Binding TotalPrice, StringFormat='C'}" 
-                                                            Width="120"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </Border>
-                        </Expander>
+                            </Expander>
+                        </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <Button Content="⬅️ Назад" Grid.Row="5" 
-Width="100" Height="38"
-Click="Back_Click"
-Style="{StaticResource SecondaryButtonStyle}"
-VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+
+        <Border Grid.Row="5" Padding="0" Margin="0,18,0,0">
+            <Button Content="←  Назад"
+                    Height="40" Width="110"
+                    HorizontalAlignment="Right"
+                    Click="Back_Click"
+                    Background="White"
+                    Foreground="#64748B"
+                    BorderBrush="#E2E8F0"
+                    BorderThickness="1"
+                    FontWeight="SemiBold"
+                    Cursor="Hand">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Border>
     </Grid>
 </Page>

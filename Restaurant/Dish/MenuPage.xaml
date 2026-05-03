@@ -31,6 +31,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0" 
@@ -178,5 +179,24 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+
+        <Border Grid.Row="2" Margin="0,20,0,0">
+            <Button Content="←  Назад"
+                    Height="40" Width="110"
+                    HorizontalAlignment="Right"
+                    Click="Back_Click"
+                    Background="White"
+                    Foreground="#64748B"
+                    BorderBrush="#E2E8F0"
+                    BorderThickness="1"
+                    FontWeight="SemiBold"
+                    Cursor="Hand">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Border>
     </Grid>
 </Page>

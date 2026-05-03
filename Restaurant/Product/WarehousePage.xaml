@@ -53,8 +53,7 @@
 
                 <TextBlock Grid.Column="0" Text="" FontWeight="Bold"/>
                 <TextBlock Grid.Column="1" Text="Продукт" FontWeight="Bold" FontSize="13" Margin="10,0"/>
-                <TextBlock Grid.Column="2" Text="Остаток" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center"/>
-                <TextBlock Grid.Column="3" Text="Ед. изм." FontWeight="Bold" FontSize="13" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Text="Остаток" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center"/>
                 <TextBlock Grid.Column="4" Text="Статус" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center"/>
             </Grid>
         </Border>
@@ -116,9 +115,9 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="60"/>
                                                     <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="150"/>
                                                     <ColumnDefinition Width="100"/>
-                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition Width="50"/>
+                                                    <ColumnDefinition Width="170"/>
                                                 </Grid.ColumnDefinitions>
 
                                                 <Border Grid.Column="0" 
@@ -152,7 +151,7 @@
                                                            Foreground="#6C757D"/>
 
                                                 <StackPanel Grid.Column="4" 
-                                                            HorizontalAlignment="Center"
+                                                            HorizontalAlignment="Right"
                                                             VerticalAlignment="Center">
                                                     <Border CornerRadius="10" Padding="8,3" 
                                                             Background="#F8D7DA"

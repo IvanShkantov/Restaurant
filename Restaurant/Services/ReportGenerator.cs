@@ -259,13 +259,12 @@ namespace Restaurant.Reports
                     new SolidColorBrush(Color.FromRgb(133, 100, 4))
             });
 
-            paragraph.Inlines.Add(new Run($"{op.OperationDate:dd.MM.yyyy HH:mm}  "));
-            paragraph.Inlines.Add(new Run($"№{op.OperationID}  "));
+            paragraph.Inlines.Add(new Run($"{op.OperationDate:dd.MM.yyyy HH:mm} | "));
 
             if (!string.IsNullOrEmpty(op.SupplierName) && op.SupplierName != "—")
-                paragraph.Inlines.Add(new Run($"Поставщик: {op.SupplierName}  "));
+                paragraph.Inlines.Add(new Run($"Поставщик: {op.SupplierName} | "));
 
-            paragraph.Inlines.Add(new Run($"Сотрудник: {op.EmployeeName}  "));
+            paragraph.Inlines.Add(new Run($"Сотрудник: {op.EmployeeName} | "));
 
             paragraph.Inlines.Add(new Run(FormatAsDollars(op.Amount))
             {

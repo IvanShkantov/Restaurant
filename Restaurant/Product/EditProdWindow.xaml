@@ -5,112 +5,181 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant.Product"
         mc:Ignorable="d"
-        Title="EditProdWindow" HorizontalAlignment="Center" VerticalAlignment="Center" SizeToContent="WidthAndHeight" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+        Title="Редактирование продукта"
+        Background="#F8FAFC"
+        WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <local:ImagePathConverter x:Key="ImagePathConverter"/>
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="20" ShadowDepth="2" Opacity="0.08"/>
+        <DropShadowEffect x:Key="ImageShadow" BlurRadius="12" ShadowDepth="3" Opacity="0.1"/>
     </Window.Resources>
 
-    <Grid Margin="20">
-        <Border BorderBrush="#E5E7EB"
+    <Grid Margin="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" 
+                Width="140" Height="140"
+                Background="#F8FAFC" 
+                CornerRadius="16"
+                Margin="0,0,0,16"
+                BorderBrush="#E2E8F0"
                 BorderThickness="1"
-                CornerRadius="10"
-                Padding="20"
-                Background="White">
+                HorizontalAlignment="Center"
+                Effect="{StaticResource ImageShadow}">
+            <Image x:Name="ProductImage"
+                   Source="{Binding Product.ImagePath, Converter={StaticResource ImagePathConverter}}"
+                   Stretch="Uniform" Margin="10"/>
+        </Border>
+
+        <Button Grid.Row="1" 
+                Content="📷  Выбрать изображение"
+                Height="36" Width="200"
+                Margin="0,0,0,20"
+                HorizontalAlignment="Center"
+                Click="ChooseImageBtn_Click"
+                Background="White"
+                Foreground="#475569"
+                BorderBrush="#CBD5E1"
+                BorderThickness="1"
+                FontWeight="SemiBold"
+                FontSize="13"
+                Cursor="Hand">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Border Grid.Row="2" Background="White" CornerRadius="14" Padding="20" Effect="{StaticResource CardShadow}">
+            <StackPanel>
+                <TextBlock Text="Название продукта" FontWeight="SemiBold" 
+                           Foreground="#64748B" FontSize="12" Margin="0,0,0,5"/>
+                <TextBox Text="{Binding Product.Name, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="15" Padding="12,10"
+                         FontWeight="Medium"
+                         Background="#F8FAFC"
+                         BorderBrush="#E2E8F0"
+                         BorderThickness="1">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="3" Background="White" CornerRadius="14" Padding="20" 
+                Margin="0,10,0,0" Effect="{StaticResource CardShadow}">
+            <StackPanel>
+                <TextBlock Text="Единица измерения" FontWeight="SemiBold" 
+                           Foreground="#64748B" FontSize="12" Margin="0,0,0,5"/>
+                <TextBox Text="{Binding Product.Unit, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="15" Padding="12,10"
+                         FontWeight="Medium"
+                         Background="#F8FAFC"
+                         BorderBrush="#E2E8F0"
+                         BorderThickness="1">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="4" Background="White" CornerRadius="14" Padding="20" 
+                Margin="0,10,0,0" Effect="{StaticResource CardShadow}">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                
-                <Border Grid.Row="0" 
-                        Height="200" Width="200"
-                        Background="#F8F9FA" 
-                        CornerRadius="10"
-                        Margin="0,0,0,15"
-                        BorderBrush="#E5E7EB"
-                        BorderThickness="1"
-                        HorizontalAlignment="Center">
-                    <Image x:Name="ProductImage"
-                           Source="{Binding Product.ImagePath, Converter={StaticResource ImagePathConverter}}"
-                           Stretch="Uniform" Margin="5"/>
-                </Border>
-
-                <Button Grid.Row="1" 
-                        Content="📷 Выбрать изображение"
-                        Width="200" Height="30"
-                        Margin="0,0,0,20"
-                        HorizontalAlignment="Center"
-                        Click="ChooseImageBtn_Click"/>
-
-                <Grid Grid.Row="2" Margin="0,0,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="250"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0" Grid.Column="0" 
-                               Text="Название:" 
-                               VerticalAlignment="Center" Margin="0,0,10,10"
-                               FontWeight="SemiBold"/>
-                    <TextBox Grid.Row="0" Grid.Column="1"
-                             Text="{Binding Product.Name, UpdateSourceTrigger=PropertyChanged}"
-                             FontSize="14" Padding="5" Margin="0,0,0,10"/>
-
-                    <TextBlock Grid.Row="1" Grid.Column="0" 
-                               Text="Ед. измерения:" 
-                               VerticalAlignment="Center" Margin="0,0,10,10"
-                               FontWeight="SemiBold"/>
-                    <TextBox Grid.Row="1" Grid.Column="1"
-                             Text="{Binding Product.Unit, UpdateSourceTrigger=PropertyChanged}"
-                             FontSize="14" Padding="5" Margin="0,0,0,10"/>
-
-                    <TextBlock Grid.Row="2" Grid.Column="0" 
-                               Text="Категория:" 
-                               VerticalAlignment="Center" Margin="0,0,10,0"
-                               FontWeight="SemiBold"/>
-                    <Grid Grid.Row="2" Grid.Column="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <ComboBox Grid.Column="0"
-                              ItemsSource="{Binding Categories}" 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Категория" FontWeight="SemiBold" 
+                               Foreground="#64748B" FontSize="12" Margin="0,0,0,5"/>
+                    <ComboBox ItemsSource="{Binding Categories}" 
                               DisplayMemberPath="CategoryName" 
                               SelectedValuePath="CategoryID" 
                               SelectedValue="{Binding Product.CategoryID, Mode=TwoWay}"
-                              FontSize="14" Padding="5"/>
-                        <Button Grid.Column="1" 
-                                Content="📋" 
-                                Width="30" Height="30"
-                                Margin="5,0,0,0"
-                                Click="CategoriesBtn_Click"
-                                ToolTip="Список категорий"
-                                Style="{StaticResource IconButtonStyle}"/>
-                    </Grid>
-                </Grid>
-
-                <StackPanel Grid.Row="4" Orientation="Horizontal" 
-                            HorizontalAlignment="Right" Margin="0,20,0,0">
-                    <Button x:Name="SaveButt" 
-                            Content="💾 Сохранить" 
-                            Width="120" Height="35"
-                            Style="{StaticResource PrimaryButtonStyle}" 
-                            Click="SaveButt_Click"/>
-                    <Button x:Name="CancelButt" 
-                            Content="Отмена" 
-                            Width="100" Height="35" 
-                            Margin="10,0,0,0"
-                            Click="CancelBtn_Click"/>
+                              FontSize="14" 
+                              Padding="10,8"
+                              Background="#F8FAFC"
+                              BorderBrush="#E2E8F0"
+                              BorderThickness="1">
+                        <ComboBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
                 </StackPanel>
+                <Button Grid.Column="1" 
+                        Content="📋" 
+                        Width="40" Height="40"
+                        Margin="8,20,0,0"
+                        VerticalAlignment="Bottom"
+                        Click="CategoriesBtn_Click"
+                        ToolTip="Управление категориями"
+                        Background="#F1F5F9"
+                        BorderThickness="0"
+                        FontSize="16"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
             </Grid>
+        </Border>
+
+        <Border Grid.Row="5" Margin="0,18,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="CancelButt" 
+                        Content="Отмена"
+                        Height="42" Width="110"
+                        Margin="0,0,10,0"
+                        Click="CancelBtn_Click"
+                        Background="White"
+                        Foreground="#64748B"
+                        BorderBrush="#E2E8F0"
+                        BorderThickness="1"
+                        FontWeight="SemiBold"
+                        FontSize="14"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button x:Name="SaveButt" 
+                        Content="💾  Сохранить"
+                        Height="42" Width="140"
+                        Click="SaveButt_Click"
+                        Background="#3B82F6"
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontWeight="SemiBold"
+                        FontSize="14"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
         </Border>
     </Grid>
 </Window>

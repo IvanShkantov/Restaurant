@@ -262,6 +262,7 @@ namespace Restaurant.Purnchases
             {
                 viewModel.Supplier = new Suppliers
                 {
+                    SupplierID = BackupSupplier.SupplierID,
                     Name = BackupSupplier.Name,
                     Phone = BackupSupplier.Phone,
                     Email = BackupSupplier.Email,

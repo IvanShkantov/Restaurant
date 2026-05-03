@@ -80,7 +80,7 @@
             <Button x:Name="AddCategoryBtn" 
                     Content="➕ Добавить категорию" 
                     Style="{StaticResource PrimaryButtonStyle}"
-                    Width="170" Height="30" 
+                    Width="179" Height="30" 
                     HorizontalAlignment="Left"
                     Click="AddCategoryBtn_Click"/>
             <TextBlock HorizontalAlignment="Right" 
@@ -179,20 +179,43 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <StackPanel Grid.Row="3" 
-                    Orientation="Horizontal" 
-                    HorizontalAlignment="Right" 
-                    Margin="0,15,0,0">
-            <Button x:Name="SaveAllBtn" 
-                    Content="💾 Сохранить изменения" 
-                    Style="{StaticResource PrimaryButtonStyle}"
-                    Width="170" Height="35"
-                    Click="SaveAllBtn_Click"/>
-            <Button x:Name="CancelBtn" 
-                    Content="Отмена" 
-                    Width="100" Height="35" 
-                    Margin="10,0,0,0"
-                    Click="CancelBtn_Click"/>
-        </StackPanel>
+        <Border Grid.Row="3" Margin="0,18,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="CancelButt" 
+                Content="Отмена"
+                Height="42" Width="110"
+                Margin="0,0,10,0"
+                Click="CancelBtn_Click"
+                Background="White"
+                Foreground="#64748B"
+                BorderBrush="#E2E8F0"
+                BorderThickness="1"
+                FontWeight="SemiBold"
+                FontSize="14"
+                Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button x:Name="SaveButt" 
+                Content="💾  Сохранить"
+                Height="42" Width="140"
+                Click="SaveAllBtn_Click"
+                Background="#3B82F6"
+                Foreground="White"
+                BorderThickness="0"
+                FontWeight="SemiBold"
+                FontSize="14"
+                Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

@@ -5,42 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant.EmplPages"
         mc:Ignorable="d"
-        Title="EditEmployeeWindow" Width="347">
+        Title="Редактирование сотрудника"
+        Background="#F8FAFC"
+        WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-
-        <Style x:Key="FieldLabelStyle" TargetType="TextBlock">
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Margin" Value="0,0,10,5"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-
-        <Style x:Key="FieldTextBoxStyle" TargetType="TextBox">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="8,5"/>
-            <Setter Property="Margin" Value="0,0,0,15"/>
-            <Setter Property="BorderBrush" Value="#CED4DA"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border Background="{TemplateBinding Background}" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="4"
-                                Padding="{TemplateBinding Padding}">
-                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderBrush" Value="#80BDFF"/>
-                                <Setter Property="BorderThickness" Value="2"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="20" ShadowDepth="2" Opacity="0.08"/>
+        <DropShadowEffect x:Key="AvatarShadow" BlurRadius="12" ShadowDepth="3" Opacity="0.1"/>
     </Window.Resources>
 
     <Grid Margin="25">
@@ -52,25 +23,29 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" 
                    x:Name="TitleText"
-                   Text="НОВЫЙ СОТРУДНИК" 
-                   FontSize="20" FontWeight="Bold" 
-                   Margin="0,0,0,20"
+                   Text="Новый сотрудник" 
+                   FontSize="22" FontWeight="Bold" 
+                   Foreground="#1E293B"
+                   Margin="0,0,0,22"
                    HorizontalAlignment="Center"/>
 
         <Border Grid.Row="1" 
-                Width="100" Height="100"
-                Background="#F0F0F0" 
-                CornerRadius="50"
-                Margin="0,0,0,20"
-                BorderBrush="#DEE2E6"
+                Width="90" Height="90"
+                Background="#EFF6FF" 
+                CornerRadius="45"
+                Margin="0,0,0,22"
+                BorderBrush="#BFDBFE"
                 BorderThickness="2"
-                HorizontalAlignment="Center">
+                HorizontalAlignment="Center"
+                Effect="{StaticResource AvatarShadow}">
             <Image x:Name="EmployeeIcon"
+                   Width="80" Height="80"
                    Stretch="Uniform">
                 <Image.Style>
                     <Style TargetType="Image">
@@ -80,94 +55,199 @@
             </Image>
         </Border>
 
-        <Grid Grid.Row="2" Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Фамилия:" Style="{StaticResource FieldLabelStyle}"/>
-            <TextBox Grid.Column="1" x:Name="LNameBox"
-                     Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
-                     Style="{StaticResource FieldTextBoxStyle}"/>
-        </Grid>
+        <Border Grid.Row="2" Background="White" CornerRadius="14" Padding="20" Effect="{StaticResource CardShadow}">
+            <StackPanel>
+                <TextBlock Text="Фамилия" FontWeight="SemiBold" 
+                           Foreground="#64748B" FontSize="12" Margin="0,0,0,5"/>
+                <TextBox x:Name="LNameBox"
+                         Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="15" Padding="12,10"
+                         FontWeight="Medium"
+                         Background="#F8FAFC"
+                         BorderBrush="#E2E8F0"
+                         BorderThickness="1">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </StackPanel>
+        </Border>
 
-        <Grid Grid.Row="3" Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Имя:" Style="{StaticResource FieldLabelStyle}"/>
-            <TextBox Grid.Column="1" x:Name="FNameBox"
-                     Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"
-                     Style="{StaticResource FieldTextBoxStyle}"/>
-        </Grid>
+        <Border Grid.Row="3" Background="White" CornerRadius="14" Padding="20" 
+                Margin="0,10,0,0" Effect="{StaticResource CardShadow}">
+            <StackPanel>
+                <TextBlock Text="Имя" FontWeight="SemiBold" 
+                           Foreground="#64748B" FontSize="12" Margin="0,0,0,5"/>
+                <TextBox x:Name="FNameBox"
+                         Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="15" Padding="12,10"
+                         FontWeight="Medium"
+                         Background="#F8FAFC"
+                         BorderBrush="#E2E8F0"
+                         BorderThickness="1">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </StackPanel>
+        </Border>
 
-        <Grid Grid.Row="4" Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Отчество:" Style="{StaticResource FieldLabelStyle}"/>
-            <TextBox Grid.Column="1" x:Name="MNameBox"
-                     Text="{Binding MiddleName, UpdateSourceTrigger=PropertyChanged}"
-                     Style="{StaticResource FieldTextBoxStyle}"/>
-        </Grid>
+        <Border Grid.Row="4" Background="White" CornerRadius="14" Padding="20" 
+                Margin="0,10,0,0" Effect="{StaticResource CardShadow}">
+            <StackPanel>
+                <TextBlock Text="Отчество" FontWeight="SemiBold" 
+                           Foreground="#64748B" FontSize="12" Margin="0,0,0,5"/>
+                <TextBox x:Name="MNameBox"
+                         Text="{Binding MiddleName, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="15" Padding="12,10"
+                         FontWeight="Medium"
+                         Background="#F8FAFC"
+                         BorderBrush="#E2E8F0"
+                         BorderThickness="1">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </StackPanel>
+        </Border>
 
-        <Grid Grid.Row="5" Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Должность:" Style="{StaticResource FieldLabelStyle}"/>
-            <ComboBox Grid.Column="1"
-                      ItemsSource="{Binding Positions}"
-                      SelectedItem="{Binding SelectedPosition}"
-                      DisplayMemberPath="PositionName"
-                      FontSize="14" Padding="5"
-                      Margin="0,0,0,15"/>
-            <Button Grid.Column="2" 
-                Content="📋" 
-                Width="30" Height="30"
-                Margin="5,0,0,0"
-                Click="PositionsBtn_Click"
-                ToolTip="Управление должностями"
-                Style="{StaticResource IconButtonStyle}"/>
-        </Grid>
+        <Border Grid.Row="5" Background="White" CornerRadius="14" Padding="20" 
+                Margin="0,10,0,0" Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Должность" FontWeight="SemiBold" 
+                               Foreground="#64748B" FontSize="12" Margin="0,0,0,5"/>
+                    <ComboBox ItemsSource="{Binding Positions}"
+                              SelectedItem="{Binding SelectedPosition}"
+                              DisplayMemberPath="PositionName"
+                              FontSize="14" 
+                              Padding="10,8"
+                              Background="#F8FAFC"
+                              BorderBrush="#E2E8F0"
+                              BorderThickness="1">
+                        <ComboBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
+                </StackPanel>
+                <Button Grid.Column="1" 
+                        Content="📋" 
+                        Width="40" Height="40"
+                        Margin="8,20,0,0"
+                        VerticalAlignment="Bottom"
+                        Click="PositionsBtn_Click"
+                        ToolTip="Управление должностями"
+                        Background="#F1F5F9"
+                        BorderThickness="0"
+                        FontSize="16"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Border>
 
-        <Grid Grid.Row="6" Margin="0,0,0,10" 
-              Visibility="{Binding IsNewEmployee, Converter={StaticResource BoolToVis}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="138"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Пригласительный код:" 
-                       Style="{StaticResource FieldLabelStyle}" Height="16" Margin="0,0,10,0"/>
-            <TextBox x:Name="InviteCodeBox"
-                     Text="{Binding InviteCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                     Style="{StaticResource FieldTextBoxStyle}"
-                     IsReadOnly="True"
-                     Margin="0,0,38,15" Grid.Column="1"/>
-            <Button Grid.Column="1" 
-                    Content="🎲"
-                    Height="NaN"
-                    Click="GenerateInviteCode_Click"
-                    Style="{StaticResource SecondaryButtonStyle}" Margin="125,12,0,20"/>
-        </Grid>
+        <Border Grid.Row="6" Background="White" CornerRadius="14" Padding="20" 
+                Margin="0,10,0,0" Effect="{StaticResource CardShadow}"
+                Visibility="{Binding IsNewEmployee, Converter={StaticResource BoolToVis}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Пригласительный код" FontWeight="SemiBold" 
+                               Foreground="#64748B" FontSize="12" Margin="0,0,0,5"/>
+                    <TextBox x:Name="InviteCodeBox"
+                             Text="{Binding InviteCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                             FontSize="15" Padding="12,10"
+                             FontWeight="Medium"
+                             IsReadOnly="True"
+                             Background="#F8FAFC"
+                             BorderBrush="#E2E8F0"
+                             BorderThickness="1"
+                             Foreground="#3B82F6"
+                             FontFamily="Consolas">
+                        <TextBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+                </StackPanel>
+                <Button Grid.Column="1" 
+                        Content="🎲"
+                        Width="40" Height="40"
+                        Margin="8,20,0,0"
+                        VerticalAlignment="Bottom"
+                        Click="GenerateInviteCode_Click"
+                        ToolTip="Сгенерировать новый код"
+                        Background="#EFF6FF"
+                        Foreground="#3B82F6"
+                        BorderThickness="0"
+                        FontSize="16"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Border>
 
-        <StackPanel Grid.Row="7" Orientation="Horizontal" 
-                    HorizontalAlignment="Right" Margin="0,10,0,0">
-            <Button x:Name="SaveBtn" 
-                    Content="💾 Сохранить" 
-                    Width="120" Height="35"
-                    Style="{StaticResource PrimaryButtonStyle}" 
-                    Click="SaveBtn_Click"/>
-            <Button x:Name="CancelBtn" 
-                    Content="Отмена" 
-                    Width="100" Height="35" 
-                    Margin="10,0,0,0"
-                    Click="CancelBtn_Click"/>
-        </StackPanel>
+        <Border Grid.Row="8" Margin="0,18,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="CancelBtn" 
+                        Content="Отмена"
+                        Height="42" Width="110"
+                        Margin="0,0,10,0"
+                        Click="CancelBtn_Click"
+                        Background="White"
+                        Foreground="#64748B"
+                        BorderBrush="#E2E8F0"
+                        BorderThickness="1"
+                        FontWeight="SemiBold"
+                        FontSize="14"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button x:Name="SaveBtn" 
+                        Content="💾  Сохранить"
+                        Height="42" Width="140"
+                        Click="SaveBtn_Click"
+                        Background="#3B82F6"
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontWeight="SemiBold"
+                        FontSize="14"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

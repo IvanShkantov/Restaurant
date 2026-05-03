@@ -59,7 +59,8 @@ namespace Restaurant.Services
                             context.SaveChanges();
                         }
 
-                        System.Diagnostics.Debug.WriteLine($"\n\n[AUDIT] {eventType}: {entityName} #{entityId} ({description}): {details}\n\n");
+                        System.Diagnostics.Debug.WriteLine($"\n\n[AUDIT] {eventType}: {entityName} " +
+                            $"#{entityId} ({description}): {details}\n\n");
                     }
                     catch (Exception ex)
                     {

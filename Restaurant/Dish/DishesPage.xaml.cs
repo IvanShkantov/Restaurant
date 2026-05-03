@@ -156,12 +156,13 @@ namespace Restaurant.Dish
                         .OrderBy(id => id)
                         .ToList();
 
-                    sb.AppendLine($"⏳ Активные заказы ({orderIds.Count}):");
+                    sb.AppendLine($"Активные заказы ({orderIds.Count}):");
                     foreach (var orderId in orderIds)
                     {
                         var order = activeItems.First(oi => oi.OrderID == orderId).Orders;
                         var itemCount = activeItems.Count(oi => oi.OrderID == orderId);
-                        sb.AppendLine($"   • Заказ: {AuditService.OrderID(orderId)} ({itemCount} поз., статус: {order.Status})");
+                        sb.AppendLine($"   • Заказ: {AuditService.OrderID(orderId)} " +
+                            $"({itemCount} поз., статус: {order.Status})");
                     }
                     sb.AppendLine();
                     sb.AppendLine($"   Завершите или отмените эти заказы перед удалением блюда.");
@@ -226,6 +227,7 @@ namespace Restaurant.Dish
             var window = new DishCategoriesWindow(user);
             window.Owner = Application.Current.MainWindow;
 
+            // Если окно сохранило изменения — обновляем страницу
             if (window.ShowDialog() == true)
             {
                 LoadDishes();

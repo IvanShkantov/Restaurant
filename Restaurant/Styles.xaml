@@ -97,6 +97,7 @@ CornerRadius="4">
     <Style x:Key="PrimaryButtonStyle" TargetType="Button">
         <Setter Property="Height" Value="40"/>
         <Setter Property="Margin" Value="0,20,0,5"/>
+        <Setter Property="Padding" Value="10,0,31,0"/>
         <Setter Property="Background" Value="#007BFF"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>

@@ -5,43 +5,73 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Restaurant"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="PurchPage" Background="#F8F9FB">
+      d:DesignHeight="450"
+      Title="PurchPage" Background="#F8FAFC" d:Width="1432">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <DropShadowEffect x:Key="HeaderShadow" BlurRadius="20" ShadowDepth="0" Opacity="0.05"/>
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="12" ShadowDepth="2" Opacity="0.06"/>
     </Page.Resources>
 
     <Grid Margin="25">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.Row="0" Margin="0,0,0,20">
-            <TextBlock Text="Закупки"
-                       FontSize="28"
-                       FontWeight="SemiBold"
-                       DockPanel.Dock="Left"/>
+        <Border Grid.Row="0" Margin="0,0,0,22" Background="White" CornerRadius="16" Padding="20" Effect="{StaticResource HeaderShadow}">
+            <Grid>
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Закупки" FontSize="28" FontWeight="Bold" 
+                               Foreground="#1E293B" VerticalAlignment="Center"/>
+                    <Button Grid.Column="1" x:Name="SuppliersButt" 
+                            Content="📋 Поставщики"
+                            Height="36" Padding="16,0"
+                            Margin="20,0,0,0"
+                            VerticalAlignment="Center"
+                            Click="SuppliersButt_Click"
+                            Background="#F1F5F9"
+                            Foreground="#475569"
+                            BorderThickness="0"
+                            FontWeight="SemiBold"
+                            Cursor="Hand" HorizontalAlignment="Center">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Grid.Column="2" Content="➕  Добавить закупку"
+                        Height="42" Padding="20,0"
+                        HorizontalAlignment="Right"
+                        Click="AddPurnchButt_Click"
+                        Background="#3B82F6"
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontWeight="SemiBold"
+                        FontSize="14"
+                        Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="12"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Border>
 
-            <Button x:Name="SuppliersButt" Content="📦 Управление поставщиками"
-                    Width="189" Height="40"
-                    DockPanel.Dock="Right"
-                    Style="{StaticResource SecondaryButtonStyle}" Click="SuppliersButt_Click"/>
-
-
-            <Button Content="Добавить"
-                    Width="160" Height="40"
-                    DockPanel.Dock="Right"
-                    Style="{StaticResource PrimaryButtonStyle}"
-                    Click="AddPurnchButt_Click"/>
-        </DockPanel>
-
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="22"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
@@ -49,94 +79,171 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Активные"
-                           FontSize="20"
-                           Grid.Row="0"
-                           FontWeight="SemiBold"
-                           Margin="0,0,0,10"/>
+
+                <Border Grid.Row="0" Background="#EFF6FF" CornerRadius="12" Padding="14,10" Margin="0,0,0,14">
+                    <TextBlock Text="Активные закупки" FontSize="18" FontWeight="Bold" 
+                               Foreground="#1E40AF" HorizontalAlignment="Center"/>
+                </Border>
 
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Purchases}" d:ItemsSource="{d:SampleData ItemCount=6}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-
                                 <Border Background="White"
-                                        CornerRadius="10"
-                                        Padding="15"
+                                        CornerRadius="14"
+                                        Padding="0"
                                         Margin="0,0,0,12"
-                                        BorderBrush="#E5E7EB"
-                                        BorderThickness="1">
-
+                                        Effect="{StaticResource CardShadow}">
                                     <StackPanel>
-                                        <Grid Margin="0,0,0,10">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
+                                        <Border Padding="18,16,18,0">
+                                            <Grid Margin="0,0,0,12">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
 
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding SupplierName}"
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding SupplierName}"
+                                                               FontWeight="Bold"
+                                                               FontSize="16"
+                                                               Foreground="#1E293B"/>
+                                                    <TextBlock Text="{Binding CreatedAt, StringFormat='dd.MM.yyyy HH:mm'}"
+                                                               FontSize="12"
+                                                               Foreground="#94A3B8"
+                                                               Margin="0,2,0,0"/>
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                    <Button Content="✔"
+                                                            Width="34" Height="34"
+                                                            Margin="0,0,4,0"
+                                                            Click="MarkButt_Click"
+                                                            Tag="{Binding PurchaseID}"
+                                                            ToolTip="Отметить как доставленное"
+                                                            Background="#ECFDF5"
+                                                            Foreground="#10B981"
+                                                            BorderThickness="0"
+                                                            FontSize="16"
+                                                            Cursor="Hand">
+                                                        <Button.Resources>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="CornerRadius" Value="8"/>
+                                                            </Style>
+                                                        </Button.Resources>
+                                                    </Button>
+                                                    <Button Content="✎"
+                                                            Width="34" Height="34"
+                                                            Margin="0,0,4,0"
+                                                            Click="EditPurnchButt_Click"
+                                                            Tag="{Binding PurchaseID}"
+                                                            ToolTip="Редактировать"
+                                                            Background="#EFF6FF"
+                                                            Foreground="#3B82F6"
+                                                            BorderThickness="0"
+                                                            FontSize="16"
+                                                            Cursor="Hand">
+                                                        <Button.Resources>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="CornerRadius" Value="8"/>
+                                                            </Style>
+                                                        </Button.Resources>
+                                                    </Button>
+                                                    <Button Content="✖"
+                                                            Width="34" Height="34"
+                                                            Click="DeleteBtn_Click"
+                                                            Tag="{Binding PurchaseID}"
+                                                            ToolTip="Удалить"
+                                                            Background="#FEE2E2"
+                                                            Foreground="#EF4444"
+                                                            BorderThickness="0"
+                                                            FontSize="16"
+                                                            Cursor="Hand">
+                                                        <Button.Resources>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="CornerRadius" Value="8"/>
+                                                            </Style>
+                                                        </Button.Resources>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Background="#F8FAFC" Padding="18,12" Margin="0,0,0,0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Text="{Binding EmployeeFullName}"
+                                                           FontSize="13"
+                                                           Foreground="#64748B"
+                                                           VerticalAlignment="Center"/>
+
+                                                <Border Grid.Column="1" 
+                                                        Background="#FEF3C7" 
+                                                        CornerRadius="20" 
+                                                        Padding="12,4"
+                                                        Margin="0,0,12,0" HorizontalAlignment="Center">
+                                                    <TextBlock Text="{Binding StatusText}"
+                                                               FontSize="12"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="#92400E"/>
+                                                </Border>
+
+                                                <TextBlock Grid.Column="2"
+                                                           Text="{Binding TotalPurchasePrice, StringFormat='C'}"
                                                            FontWeight="Bold"
-                                                           FontSize="16"/>
+                                                           FontSize="18"
+                                                           Foreground="#3B82F6"
+                                                           VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
 
-                                                <TextBlock Text="{Binding CreatedAt, StringFormat='dd.MM.yyyy HH:mm'}"
-                                                           Foreground="Gray"/>
-                                            </StackPanel>
-
-                                            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                                <Button Content="✔"
-                                                        Width="32" Height="32"
-                                                        Margin="5"
-                                                        Click="MarkButt_Click"
-                                                        DataContext="{Binding PurchaseID}"/>
-
-                                                <Button Content="✎"
-                                                        Width="32" Height="32"
-                                                        Margin="5"
-                                                        Click="EditPurnchButt_Click"
-                                                        DataContext="{Binding PurchaseID}"/>
-
-                                                <Button Content="✖"
-                                                        Width="32" Height="32"
-                                                        Margin="5"
-                                                        Click="DeleteBtn_Click"
-                                                        DataContext="{Binding PurchaseID}"/>
-                                            </StackPanel>
-                                        </Grid>
-
-                                        <Grid Margin="0,0,0,10">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <TextBlock Text="{Binding EmployeeFullName}"/>
-                                            <TextBlock Grid.Column="1"
-                                                       Text="{Binding StatusText}"
-                                                       HorizontalAlignment="Center"/>
-                                            <TextBlock Grid.Column="2"
-                                                       Text="{Binding TotalPurchasePrice, StringFormat='C'}"
-                                                       FontWeight="Bold"
-                                                       Foreground="#3B82F6"
-                                                       HorizontalAlignment="Right"/>
-                                        </Grid>
-
-                                        <DataGrid ItemsSource="{Binding Items}"
-                                                  AutoGenerateColumns="False"
-                                                  HeadersVisibility="Column"
-                                                  IsReadOnly="True"
-                                                  RowHeight="30"
-                                                  FontSize="13">
-
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Продукт" Binding="{Binding ProductName}" Width="*"/>
-                                                <DataGridTextColumn Header="Кол-во" Binding="{Binding Quantity}" Width="80"/>
-                                                <DataGridTextColumn Header="Цена" Binding="{Binding UnitPrice}" Width="100"/>
-                                                <DataGridTextColumn Header="Сумма" Binding="{Binding TotalPrice}" Width="100"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-
+                                        <Border Padding="16,0,16,16">
+                                            <DataGrid ItemsSource="{Binding Items}"
+                                                      AutoGenerateColumns="False"
+                                                      HeadersVisibility="Column"
+                                                      IsReadOnly="True"
+                                                      RowHeight="36"
+                                                      FontSize="13"
+                                                      Background="White"
+                                                      BorderThickness="0"
+                                                      GridLinesVisibility="Horizontal"
+                                                      HorizontalGridLinesBrush="#E2E8F0">
+                                                <DataGrid.Resources>
+                                                    <Style TargetType="DataGridColumnHeader">
+                                                        <Setter Property="Background" Value="White"/>
+                                                        <Setter Property="Foreground" Value="#94A3B8"/>
+                                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                                        <Setter Property="FontSize" Value="11"/>
+                                                        <Setter Property="Padding" Value="10,8"/>
+                                                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                        <Setter Property="BorderBrush" Value="#E2E8F0"/>
+                                                    </Style>
+                                                    <Style TargetType="DataGridCell">
+                                                        <Setter Property="Margin" Value="10,8"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter Property="Foreground" Value="#334155"/>
+                                                        <Setter Property="BorderThickness" Value="0"/>
+                                                    </Style>
+                                                </DataGrid.Resources>
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="ПРОДУКТ" Binding="{Binding ProductName}" Width="*"/>
+                                                    <DataGridTextColumn Header="КОЛ-ВО" Binding="{Binding Quantity}" Width="80"/>
+                                                    <DataGridTextColumn Header="ЦЕНА" Binding="{Binding UnitPrice, StringFormat='C'}" Width="100"/>
+                                                    <DataGridTextColumn Header="СУММА" Binding="{Binding TotalPrice, StringFormat='C'}" Width="110">
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                <Setter Property="Foreground" Value="#3B82F6"/>
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                    </DataGridTextColumn>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Border>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
@@ -150,86 +257,137 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Доставленные"
-                           FontSize="20"
-                           Grid.Row="0"
-                           FontWeight="SemiBold"
-                           Margin="0,0,0,10"/>
 
-                <ScrollViewer Grid.Row="1">
+                <Border Grid.Row="0" Background="#F0FDF4" CornerRadius="12" Padding="14,10" Margin="0,0,0,14">
+                    <TextBlock Text="✅ Доставленные" FontSize="18" FontWeight="Bold" 
+                               Foreground="#166534" HorizontalAlignment="Center"/>
+                </Border>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Delivered}" d:ItemsSource="{d:SampleData ItemCount=6}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border Background="White"
-                CornerRadius="10"
-                Padding="15"
-                Margin="0,0,0,12"
-                BorderBrush="#E5E7EB"
-                BorderThickness="1">
-
+                                        CornerRadius="14"
+                                        Padding="0"
+                                        Margin="0,0,0,12"
+                                        Effect="{StaticResource CardShadow}">
                                     <StackPanel>
-                                        <Grid Margin="0,0,0,10">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <StackPanel>
+                                        <Border Padding="18,16,18,0">
+                                            <StackPanel Margin="0,0,0,12">
                                                 <TextBlock Text="{Binding SupplierName}"
-                                   FontWeight="Bold"
-                                   FontSize="16"/>
-
+                                                           FontWeight="Bold"
+                                                           FontSize="16"
+                                                           Foreground="#1E293B"/>
                                                 <TextBlock Text="{Binding ClosedAt, StringFormat='dd.MM.yyyy HH:mm'}"
-                                   Foreground="Gray"/>
+                                                           FontSize="12"
+                                                           Foreground="#94A3B8"
+                                                           Margin="0,2,0,0"/>
                                             </StackPanel>
-                                        </Grid>
+                                        </Border>
 
-                                        <Grid Margin="0,0,0,10">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
+                                        <Border Background="#F8FAFC" Padding="18,12" Margin="0,0,0,0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
 
-                                            <TextBlock Text="{Binding EmployeeFullName}"/>
-                                            <TextBlock Grid.Column="1"
-                               Text="{Binding StatusText}"
-                               HorizontalAlignment="Center"/>
-                                            <TextBlock Grid.Column="2"
-                               Text="{Binding TotalPurchasePrice, StringFormat='C'}"
-                               FontWeight="Bold"
-                               Foreground="#3B82F6"
-                               HorizontalAlignment="Right"/>
-                                        </Grid>
+                                                <TextBlock Text="{Binding EmployeeFullName}"
+                                                           FontSize="13"
+                                                           Foreground="#64748B"
+                                                           VerticalAlignment="Center"/>
 
-                                        <DataGrid ItemsSource="{Binding Items}"
-                          AutoGenerateColumns="False"
-                          HeadersVisibility="Column"
-                          IsReadOnly="True"
-                          RowHeight="30"
-                          FontSize="13">
+                                                <Border Grid.Column="1" 
+                                                        Background="#D1FAE5" 
+                                                        CornerRadius="20" 
+                                                        Padding="12,4"
+                                                        Margin="0,0,12,0">
+                                                    <TextBlock Text="✅ Доставлено"
+                                                               FontSize="12"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="#065F46"/>
+                                                </Border>
 
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Продукт" Binding="{Binding ProductName}" Width="*"/>
-                                                <DataGridTextColumn Header="Кол-во" Binding="{Binding Quantity}" Width="80"/>
-                                                <DataGridTextColumn Header="Цена" Binding="{Binding UnitPrice}" Width="100"/>
-                                                <DataGridTextColumn Header="Сумма" Binding="{Binding TotalPrice}" Width="100"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
+                                                <TextBlock Grid.Column="2"
+                                                           Text="{Binding TotalPurchasePrice, StringFormat='C'}"
+                                                           FontWeight="Bold"
+                                                           FontSize="18"
+                                                           Foreground="#10B981"
+                                                           VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
 
+                                        <Border Padding="16,0,16,16">
+                                            <DataGrid ItemsSource="{Binding Items}"
+                                                      AutoGenerateColumns="False"
+                                                      HeadersVisibility="Column"
+                                                      IsReadOnly="True"
+                                                      RowHeight="36"
+                                                      FontSize="13"
+                                                      Background="White"
+                                                      BorderThickness="0"
+                                                      GridLinesVisibility="Horizontal"
+                                                      HorizontalGridLinesBrush="#E2E8F0">
+                                                <DataGrid.Resources>
+                                                    <Style TargetType="DataGridColumnHeader">
+                                                        <Setter Property="Background" Value="White"/>
+                                                        <Setter Property="Foreground" Value="#94A3B8"/>
+                                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                                        <Setter Property="FontSize" Value="11"/>
+                                                        <Setter Property="Padding" Value="10,8"/>
+                                                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                        <Setter Property="BorderBrush" Value="#E2E8F0"/>
+                                                    </Style>
+                                                    <Style TargetType="DataGridCell">
+                                                        <Setter Property="Margin" Value="10,8"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter Property="Foreground" Value="#334155"/>
+                                                        <Setter Property="BorderThickness" Value="0"/>
+                                                    </Style>
+                                                </DataGrid.Resources>
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="ПРОДУКТ" Binding="{Binding ProductName}" Width="*"/>
+                                                    <DataGridTextColumn Header="КОЛ-ВО" Binding="{Binding Quantity}" Width="80"/>
+                                                    <DataGridTextColumn Header="ЦЕНА" Binding="{Binding UnitPrice, StringFormat='C'}" Width="100"/>
+                                                    <DataGridTextColumn Header="СУММА" Binding="{Binding TotalPrice, StringFormat='C'}" Width="110">
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                <Setter Property="Foreground" Value="#10B981"/>
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                    </DataGridTextColumn>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Border>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
-                <Button Content="⬅️ Назад" Grid.Row="2" 
-Width="100" Height="38"
-Click="Back_Click"
-Style="{StaticResource SecondaryButtonStyle}"
-VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
             </Grid>
-
         </Grid>
+
+        <Border Grid.Row="2" Padding="0" Margin="0,18,0,0">
+            <Button Content="←  Назад"
+                    Height="40" Width="110"
+                    HorizontalAlignment="Right"
+                    Click="Back_Click"
+                    Background="White"
+                    Foreground="#64748B"
+                    BorderBrush="#E2E8F0"
+                    BorderThickness="1"
+                    FontWeight="SemiBold"
+                    Cursor="Hand">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Border>
     </Grid>
 </Page>

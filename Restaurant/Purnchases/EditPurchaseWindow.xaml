@@ -5,137 +5,273 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant.Purnchases"
         mc:Ignorable="d"
-        Title="EditPurchaseWindow" Height="450" Width="800" Background="#F8F9FB">
-    <Grid Margin="20">
+        Title="Редактирование закупки" Height="520" Width="780"
+        Background="#F8FAFC"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="20" ShadowDepth="2" Opacity="0.08"/>
+        <DropShadowEffect x:Key="SummaryShadow" BlurRadius="15" ShadowDepth="0" Opacity="0.06"/>
+    </Window.Resources>
+
+    <Grid Margin="22">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border Background="White" CornerRadius="10" Padding="15" Margin="0,0,0,15">
+        <Border Grid.Row="0" Padding="20" Background="White" CornerRadius="14" 
+                Margin="0,0,0,14" Effect="{StaticResource CardShadow}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel>
-                    <TextBlock Text="Поставщик" Foreground="Gray"/>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Поставщик" FontWeight="SemiBold" 
+                               Foreground="#64748B" FontSize="12" Margin="0,0,0,5"/>
                     <ComboBox ItemsSource="{Binding Suppliers}"
-                          SelectedItem="{Binding SelectedSupplier}"
-                          DisplayMemberPath="Name"/>
+                              SelectedItem="{Binding SelectedSupplier}"
+                              DisplayMemberPath="Name"
+                              FontSize="14" 
+                              Padding="10,8"
+                              Background="#F8FAFC"
+                              BorderBrush="#E2E8F0"
+                              BorderThickness="1">
+                        <ComboBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
                 </StackPanel>
 
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="Дата" Foreground="Gray"/>
-                    <TextBlock Text="{Binding PurchaseDate, StringFormat='dd.MM.yyyy HH:mm'}"/>
+                <Border Grid.Column="1" Width="1" Background="#E2E8F0" Margin="30,8"/>
+
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Дата создания" FontWeight="SemiBold" 
+                               Foreground="#64748B" FontSize="12" Margin="0,0,0,5"/>
+                    <Border Background="#F8FAFC" CornerRadius="10" Padding="14,10" BorderBrush="#E2E8F0" BorderThickness="1">
+                        <TextBlock Text="{Binding PurchaseDate, StringFormat='dd.MM.yyyy HH:mm'}"
+                                   FontWeight="SemiBold" FontSize="14"
+                                   Foreground="#475569"/>
+                    </Border>
                 </StackPanel>
             </Grid>
         </Border>
 
-        <Border Grid.Row="1" Background="White" CornerRadius="10" Padding="15">
+        <Border Grid.Row="1" Background="White" CornerRadius="14" Padding="18" Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <DockPanel>
-                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,0,0,10">
-                    <Button Content="Добавить позицию"
-                    Width="170"
-	            Click="AddItemButt_Click"/>
+                <Border Grid.Row="0" Padding="0,0,0,14">
+                    <Grid>
+                        <Button Content="➕  Добавить позицию"
+                                Height="40" Padding="16,0"
+                                HorizontalAlignment="Left"
+                                Click="AddItemButt_Click"
+                                Background="#3B82F6"
+                                Foreground="White"
+                                BorderThickness="0"
+                                FontWeight="SemiBold"
+                                FontSize="13"
+                                Cursor="Hand">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
 
-                    <TextBlock Text="{Binding EstimatedTotalPrice, StringFormat='Итого: {0:C}'}"
-                       FontSize="16"
-                       FontWeight="Bold"
-                       Margin="20,0,0,0"
-                       VerticalAlignment="Center"/>
-                </StackPanel>
+                        <Border HorizontalAlignment="Right" Background="#F0FDF4" 
+                                CornerRadius="10" Padding="18,10">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Итого:" FontSize="13" 
+                                           Foreground="#047857" FontWeight="Medium"
+                                           VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock Text="{Binding EstimatedTotalPrice, StringFormat='C'}" 
+                                           FontSize="20" FontWeight="Bold" 
+                                           Foreground="#059669"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
 
-                <Grid DockPanel.Dock="Top" Margin="0,0,0,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="90"/>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="40"/>
-                    </Grid.ColumnDefinitions>
+                <Border Grid.Row="1" Background="#F8FAFC" CornerRadius="10" Padding="14,10" Margin="0,0,0,6">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="44"/>
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Продукт" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="1" Text="Кол-во" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Column="2" Text="Ед." FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Column="3" Text="Цена" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Column="4" Text="Сумма" FontWeight="Bold" HorizontalAlignment="Center"/>
-                </Grid>
+                        <TextBlock Grid.Column="0" Text="Продукт" 
+                                   Foreground="#94A3B8" FontWeight="SemiBold" FontSize="12" Margin="8,0"/>
+                        <TextBlock Grid.Column="1" Text="Кол-во" 
+                                   Foreground="#94A3B8" FontWeight="SemiBold" FontSize="12" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="Ед." 
+                                   Foreground="#94A3B8" FontWeight="SemiBold" FontSize="12" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="3" Text="Цена" 
+                                   Foreground="#94A3B8" FontWeight="SemiBold" FontSize="12" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="4" Text="Сумма" 
+                                   Foreground="#94A3B8" FontWeight="SemiBold" FontSize="12" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="5" Text="" 
+                                   Foreground="#94A3B8" FontWeight="SemiBold" FontSize="12"/>
+                    </Grid>
+                </Border>
 
-                <ItemsControl ItemsSource="{Binding Items}" d:ItemsSource="{d:SampleData ItemCount=6}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Items}" d:ItemsSource="{d:SampleData ItemCount=6}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" Padding="8,6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="70"/>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition Width="44"/>
+                                        </Grid.ColumnDefinitions>
 
-                            <Grid Margin="0,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="90"/>
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="40"/>
-                                </Grid.ColumnDefinitions>
+                                        <ComboBox Grid.Column="0"
+                                                  ItemsSource="{Binding DataContext.AvailableProducts, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                  SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}"
+                                                  DisplayMemberPath="ProductName"
+                                                  Height="38"
+                                                  Margin="0,0,8,0"
+                                                  Background="#F8FAFC"
+                                                  BorderBrush="#E2E8F0"
+                                                  BorderThickness="1"
+                                                  FontSize="13">
+                                            <ComboBox.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="8"/>
+                                                </Style>
+                                            </ComboBox.Resources>
+                                        </ComboBox>
 
-                                <ComboBox Grid.Column="0"
-                                  ItemsSource="{Binding DataContext.AvailableProducts, RelativeSource={RelativeSource AncestorType=Window}}"
-                                  SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}"
-                                  DisplayMemberPath="ProductName"
-                                  Margin="0,0,5,0"/>
+                                        <TextBox Grid.Column="1"
+                                                 Text="{Binding Quantity, StringFormat='N2', UpdateSourceTrigger=PropertyChanged}"
+                                                 Height="38"
+                                                 Margin="0,0,8,0"
+                                                 Background="#F8FAFC"
+                                                 BorderBrush="#E2E8F0"
+                                                 BorderThickness="1"
+                                                 HorizontalContentAlignment="Center"
+                                                 FontSize="13"
+                                                 FontWeight="Medium">
+                                            <TextBox.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="8"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
 
-                                <TextBox Grid.Column="1"
-                                 Text="{Binding Quantity, StringFormat='N2', UpdateSourceTrigger=PropertyChanged}"
-                                 HorizontalContentAlignment="Center"
-                                 Margin="0,0,5,0"/>
+                                        <Border Grid.Column="2" Height="38" 
+                                                Background="#F8FAFC" CornerRadius="8" 
+                                                Margin="0,0,8,0">
+                                            <TextBlock Text="{Binding SelectedProduct.Unit}"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       Foreground="#64748B"
+                                                       FontWeight="Medium"
+                                                       FontSize="13"/>
+                                        </Border>
 
-                                <TextBlock Grid.Column="2"
-                                   Text="{Binding SelectedProduct.Unit}"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Foreground="Gray"/>
+                                        <Border Grid.Column="3" Height="38" 
+                                                Background="#F8FAFC" CornerRadius="8" 
+                                                Margin="0,0,8,0" Padding="10,0">
+                                            <TextBlock Text="{Binding UnitPrice, StringFormat='C'}"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="13"
+                                                       Foreground="#64748B"
+                                                       FontWeight="Medium"/>
+                                        </Border>
 
-                                <TextBlock Grid.Column="3"
-                                   Text="{Binding UnitPrice, StringFormat='C'}"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"/>
+                                        <Border Grid.Column="4" Height="38" 
+                                                Background="#EFF6FF" CornerRadius="8" 
+                                                Margin="0,0,8,0" Padding="10,0">
+                                            <TextBlock Text="{Binding TotalPrice, StringFormat='C'}"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="13"
+                                                       Foreground="#3B82F6"
+                                                       FontWeight="Bold"/>
+                                        </Border>
 
-                                <TextBlock Grid.Column="4"
-                                   Text="{Binding TotalPrice, StringFormat='C'}"
-                                   FontWeight="Bold"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"/>
-
-                                <Button Grid.Column="5"
-                                Content="🗑"                                
-                                Click="DeleteItemButt_Click"
-                                Width="30" Height="30"/>
-                            </Grid>
-
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-            </DockPanel>
+                                        <Button Grid.Column="5"
+                                                Content="🗑"
+                                                Width="38" Height="38"
+                                                Click="DeleteItemButt_Click"
+                                                ToolTip="Удалить позицию"
+                                                Background="#FEE2E2"
+                                                Foreground="#EF4444"
+                                                BorderThickness="0"
+                                                FontSize="14"
+                                                Cursor="Hand">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="8"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
         </Border>
 
-        <StackPanel Grid.Row="2"
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
-                Margin="0,15,0,0">
-
-            <Button Content="Отмена"
-                Width="120"
-                Margin="0,0,10,0"
-                Click="CancelButt_Click"/>
-
-            <Button Content="Сохранить"
-                Width="140"
-                Style="{StaticResource PrimaryButtonStyle}"
-                Click="SaveButt_Click"/>
-        </StackPanel>
-
+        <Border Grid.Row="2" Margin="0,16,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Отмена"
+                        Height="42" Width="110"
+                        Margin="0,0,10,0"
+                        Click="CancelButt_Click"
+                        Background="White"
+                        Foreground="#64748B"
+                        BorderBrush="#E2E8F0"
+                        BorderThickness="1"
+                        FontWeight="SemiBold"
+                        FontSize="14"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Content="💾  Сохранить"
+                        Height="42" Width="150"
+                        Click="SaveButt_Click"
+                        Background="#3B82F6"
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontWeight="SemiBold"
+                        FontSize="14"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

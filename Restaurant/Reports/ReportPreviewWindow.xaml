@@ -20,15 +20,11 @@
                         Style="{StaticResource PrimaryButtonStyle}"
                         Margin="0,0,10,0"/>
 
-                <Button Content="💾 Сохранить Word" 
+                <Button Content="💾 Экспорт Word" 
                         Width="150" Height="30"
                         Click="SaveXps_Click"
+                        Style="{StaticResource PrimaryButtonStyle}"
                         Margin="0,0,10,0"/>
-
-                <Button Content="✖ Закрыть" 
-                        Width="100" Height="30"
-                        Click="Close_Click"
-                        Style="{StaticResource SecondaryButtonStyle}"/>
             </StackPanel>
         </Border>
 
