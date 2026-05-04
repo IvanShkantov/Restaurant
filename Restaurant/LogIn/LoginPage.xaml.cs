@@ -188,6 +188,8 @@ namespace Restaurant.LogIn
 
         private void RoleChangedPage()
         {
+            Clean();   
+
             if (isVisitorSelected == true)
             {
                 gridVisitor.Visibility = Visibility.Visible;
@@ -200,17 +202,31 @@ namespace Restaurant.LogIn
             }
         }
 
+        private void Clean()
+        {
+            tbLogin.Text = "";
+            tbPassword.Password = "";
+            LNameBox.Text = "";
+            FNameBox.Text = "";
+            MNameBox.Text = "";
+            InviteCodeBox.Text = "";
+            LoginBox.Text = "";
+            PasswordBox.Password = "";
+            ConfirmPasswordBox.Password = "";
+        }
+
         private void toReg_butt_Click(object sender, RoutedEventArgs e)
         {
-                gridEnter.Visibility = Visibility.Collapsed;
-                gridRegistr.Visibility = Visibility.Visible;
+            Clean();
+            gridEnter.Visibility = Visibility.Collapsed;
+            gridRegistr.Visibility = Visibility.Visible;
         }
 
         private void toEnter_butt_Click(object sender, RoutedEventArgs e)
         {
-                gridEnter.Visibility = Visibility.Visible;
-                gridRegistr.Visibility = Visibility.Collapsed;
-
+            Clean();
+            gridEnter.Visibility = Visibility.Visible;
+            gridRegistr.Visibility = Visibility.Collapsed;
         }
 
         private void Menu_btn_Click(object sender, RoutedEventArgs e)

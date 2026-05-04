@@ -322,12 +322,12 @@ namespace Restaurant.Purnchases
                         .OrderBy(id => id)
                         .ToList();
 
-                    sb.AppendLine($"⏳ Цена используется в активных закупках ({purchaseIds.Count}):");
+                    sb.AppendLine($"Цена используется в активных закупках ({purchaseIds.Count}):");
                     foreach (var id in purchaseIds)
                     {
                         var purchase = activeItems.First(pi => pi.PurchaseID == id).Purchases;
                         var itemCount = activeItems.Count(pi => pi.PurchaseID == id);
-                        sb.AppendLine($"   • Закупка №{id} от {purchase.CreatedAt:dd.MM.yyyy} ({itemCount} поз., статус: {purchase.PurchaseStatus})");
+                        sb.AppendLine($"   • Закупка от {purchase.CreatedAt:dd.MM.yyyy} ({itemCount} поз., статус: {purchase.PurchaseStatus})");
                     }
                     sb.AppendLine("   Завершите или отмените эти закупки перед удалением цены.");
                     sb.AppendLine();

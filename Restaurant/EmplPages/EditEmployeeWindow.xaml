@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Редактирование сотрудника"
         Background="#F8FAFC"
-        WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
+        WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" d:DesignWidth="378.292">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <DropShadowEffect x:Key="CardShadow" BlurRadius="20" ShadowDepth="2" Opacity="0.08"/>

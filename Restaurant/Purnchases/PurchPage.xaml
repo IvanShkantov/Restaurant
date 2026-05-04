@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Restaurant"
       mc:Ignorable="d" 
       d:DesignHeight="450"
-      Title="PurchPage" Background="#F8FAFC" d:Width="1432">
+      Title="PurchPage" Background="#F8FAFC" d:Width="1432" d:DesignWidth="1086.667">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <DropShadowEffect x:Key="HeaderShadow" BlurRadius="20" ShadowDepth="0" Opacity="0.05"/>

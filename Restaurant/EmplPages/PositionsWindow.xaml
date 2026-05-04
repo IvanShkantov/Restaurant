@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant.EmplPages"
         mc:Ignorable="d"
-        Title="PositionsWindow">
+        Title="PositionsWindow" d:DesignHeight="557.083">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
@@ -113,7 +113,7 @@
         <TextBlock Grid.Row="0" 
                    Text="ДОЛЖНОСТИ И ПРАВА" 
                    FontSize="22" FontWeight="Bold" 
-                   Margin="0,0,0,15"/>
+                   Margin="0,0,0,15" HorizontalAlignment="Center"/>
 
         <Grid Grid.Row="1" Margin="0,0,0,15">
             <Button x:Name="AddPositionBtn" 
@@ -131,7 +131,7 @@
         </Grid>
 
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <ItemsControl ItemsSource="{Binding Positions}"  d:ItemsSource="{d:SampleData ItemCount=6}">
+            <ItemsControl ItemsSource="{Binding Positions}"  d:ItemsSource="{d:SampleData ItemCount=3}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
@@ -223,7 +223,7 @@
                                 </Border>
                             </Expander.Header>
 
-                            <ItemsControl ItemsSource="{Binding Permissions}">
+                            <ItemsControl ItemsSource="{Binding Permissions}" d:ItemsSource="{d:SampleData ItemCount=6}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <CheckBox Content="{Binding PermissionName}" 

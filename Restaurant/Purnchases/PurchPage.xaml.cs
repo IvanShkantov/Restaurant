@@ -76,8 +76,8 @@ namespace Restaurant
                         TotalPurchasePrice = (decimal)g.Key.TotalPurchasePrice,
                         EmployeeFullName = g.Key.EmployeeFullName,
                         SupplierName = g.Key.SupplierName,
-                        SupplierID = (int)g.Key.SupplierID,
-                        EmployeeID = (int)g.Key.EmployeeID,
+                        SupplierID = g.Key.SupplierID ?? 0,
+                        EmployeeID = g.Key.EmployeeID ?? 0,
                         Items = new ObservableCollection<PurchaseItemViewModel>(
                             g.Select(item => new PurchaseItemViewModel
                             {

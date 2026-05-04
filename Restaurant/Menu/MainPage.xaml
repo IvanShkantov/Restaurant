@@ -92,7 +92,7 @@
         </Border>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding MenuItems}" 
+            <ItemsControl ItemsSource="{Binding MenuItems}" d:ItemsSource="{d:SampleData ItemCount=4}"
                   HorizontalAlignment="Center"
                   Margin="40">
                 <ItemsControl.ItemsPanel>

@@ -5,7 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:Restaurant"
       mc:Ignorable="d"
-      Title="EmplPage" Background="#F8FAFC" d:Width="1404">
+      Title="EmplPage" Background="#F8FAFC" d:Width="1404" d:DesignWidth="922">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <DropShadowEffect x:Key="HeaderShadow" BlurRadius="20" ShadowDepth="0" Opacity="0.05"/>
@@ -94,7 +94,7 @@
         </Border>
 
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Employees}" d:ItemsSource="{d:SampleData ItemCount=6}">
+            <ItemsControl ItemsSource="{Binding Employees}" d:ItemsSource="{d:SampleData ItemCount=3}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border 

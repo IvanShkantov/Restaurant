@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Restaurant.Dish"
       xmlns:imgcon="clr-namespace:Restaurant.Product"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="606.295" d:DesignWidth="800"
       Title="DishesPage" Background="#F8FAFC">
     <Page.Resources>
         <imgcon:ImagePathConverter x:Key="ImagePathConverter"/>

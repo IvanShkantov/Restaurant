@@ -152,7 +152,7 @@ namespace Restaurant.EmplPages
                 if (activeOrders.Any())
                 {
                     hasBlockers = true;
-                    sb.AppendLine($"⏳ Сотрудник связан с активными заказами ({activeOrders.Count}):");
+                    sb.AppendLine($"Сотрудник связан с активными заказами ({activeOrders.Count}):");
                     foreach (var order in activeOrders.Take(5))
                     {
                         sb.AppendLine($"   • Заказ от {order.CreatedAt:dd.MM.yyyy HH:mm} (статус: {order.Status})");
@@ -171,7 +171,7 @@ namespace Restaurant.EmplPages
                 if (activePurchases.Any())
                 {
                     hasBlockers = true;
-                    sb.AppendLine($"⏳ Сотрудник связан с активными закупками ({activePurchases.Count}):");
+                    sb.AppendLine($"Сотрудник связан с активными закупками ({activePurchases.Count}):");
                     foreach (var purchase in activePurchases.Take(5))
                     {
                         sb.AppendLine($"   • Закупка от {purchase.CreatedAt:dd.MM.yyyy} (статус: {purchase.PurchaseStatus})");

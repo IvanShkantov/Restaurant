@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant.Reports"
         mc:Ignorable="d"
-        Title="ReportPreviewWindow">
+        Title="ReportPreviewWindow" d:DesignHeight="326.96" d:DesignWidth="498.667">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

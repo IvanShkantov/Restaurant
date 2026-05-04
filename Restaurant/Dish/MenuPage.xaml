@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Restaurant"
       xmlns:imgcon="clr-namespace:Restaurant.Product"
       mc:Ignorable="d" d:DesignWidth="800"
-      Title="MenuPage" Foreground="White" Height="747">
+      Title="MenuPage" Foreground="White">
 
     <Page.Resources>
         <imgcon:ImagePathConverter x:Key="ImagePathConverter"/>

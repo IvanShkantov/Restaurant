@@ -345,10 +345,10 @@ namespace Restaurant.Purnchases
                 if (activePurchases.Any())
                 {
                     hasBlockers = true;
-                    sb.AppendLine($"⏳ Поставщик связан с активными закупками ({activePurchases.Count}):");
+                    sb.AppendLine($"Поставщик связан с активными закупками ({activePurchases.Count}):");
                     foreach (var purchase in activePurchases.Take(5))
                     {
-                        sb.AppendLine($"   • Закупка №{purchase.PurchaseID} от {purchase.CreatedAt:dd.MM.yyyy} (статус: {purchase.PurchaseStatus})");
+                        sb.AppendLine($"   • Закупка от {purchase.CreatedAt:dd.MM.yyyy} (статус: {purchase.PurchaseStatus})");
                     }
                     if (activePurchases.Count > 5)
                         sb.AppendLine($"   ... и ещё {activePurchases.Count - 5}");

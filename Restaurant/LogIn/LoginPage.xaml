@@ -127,14 +127,12 @@
 
                             <TextBox Grid.Row="1" x:Name="tbLogin" 
                              Style="{StaticResource WatermarkTextBox}" 
-                             Tag="Логин"
-                             Text="admin"/>
+                             Tag="Логин"/>
 
                             <PasswordBox Grid.Row="2"  x:Name="tbPassword" 
                              Style="{StaticResource WatermarkPasswordBox}"
                              Tag="Пароль"
-                             helpers:PasswordBoxHelper.MonitorPassword="True"
-                             Password="123"/>
+                             helpers:PasswordBoxHelper.MonitorPassword="True"/>
 
                             <Button Grid.Row="3" x:Name="enter_butt" 
                             Content="Войти" 
@@ -225,7 +223,7 @@
                         Style="{StaticResource PrimaryButtonStyle}"
                         Width="200"
                         HorizontalAlignment="Center"
-                        Click="RegisterBtn_Click"/>
+                        Click="Menu_btn_Click"/>
                     </Grid>
                 </Grid>
             </Grid>

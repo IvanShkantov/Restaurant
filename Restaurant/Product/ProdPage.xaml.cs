@@ -184,7 +184,7 @@ namespace Restaurant.Product
             if (productPrices.Any())
             {
                 hasBlockers = true;
-                sb.AppendLine($"💰 Продукт используется в ценах поставщиков ({productPrices.Count})");
+                sb.AppendLine($"Продукт используется в ценах поставщиков ({productPrices.Count})");
                 sb.AppendLine("   Удалите цены поставщиков перед удалением продукта.");
                 sb.AppendLine();
             }
@@ -199,11 +199,11 @@ namespace Restaurant.Product
             {
                 hasBlockers = true;
                 var purchaseIds = purchaseItems.Select(pi => pi.PurchaseID).Distinct().ToList();
-                sb.AppendLine($"⏳ Продукт используется в активных закупках ({purchaseIds.Count}):");
+                sb.AppendLine($"Продукт используется в активных закупках ({purchaseIds.Count}):");
                 foreach (var id in purchaseIds)
                 {
                     var purchase = purchaseItems.First(pi => pi.PurchaseID == id).Purchases;
-                    sb.AppendLine($"   • Закупка №{id} (статус: {purchase.PurchaseStatus})");
+                    sb.AppendLine($"   • Закупка от {purchase.CreatedAt:dd.MM.yyyy} (статус: {purchase.PurchaseStatus})");
                 }
                 sb.AppendLine("   Завершите или отмените эти закупки перед удалением.");
                 sb.AppendLine();
@@ -217,7 +217,7 @@ namespace Restaurant.Product
             if (dishProducts.Any())
             {
                 hasBlockers = true;
-                sb.AppendLine($"🍽 Продукт является ингредиентом блюд ({dishProducts.Count}):");
+                sb.AppendLine($"Продукт является ингредиентом блюд ({dishProducts.Count}):");
                 foreach (var dp in dishProducts.Take(5))
                 {
                     sb.AppendLine($"   • {dp.Dishes.Name} ({dp.Quantity})");

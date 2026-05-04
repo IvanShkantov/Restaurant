@@ -55,16 +55,16 @@ namespace Restaurant.Reports
                 var parts = new List<string>();
 
                 if (OrdersCount > 0)
-                    parts.Add($"📋 Заказов: {OrdersCount} на {TotalOrdersAmount:C}");
+                    parts.Add($"📋 Заказов: {OrdersCount} на ${TotalOrdersAmount}");
 
                 if (PurchasesCount > 0)
-                    parts.Add($"📦 Закупок: {PurchasesCount} на {TotalPurchasesAmount:C}");
+                    parts.Add($"📦 Закупок: {PurchasesCount} на ${TotalPurchasesAmount}");
 
                 if (OrdersCount > 0 && PurchasesCount > 0)
                 {
                     var profit = TotalOrdersAmount - TotalPurchasesAmount;
                     var profitColor = profit >= 0 ? "зелёным" : "красным";
-                    parts.Add($"Прибыль: {profit:C}");
+                    parts.Add($"Прибыль: ${profit}");
                 }
 
                 return string.Join(" | ", parts);

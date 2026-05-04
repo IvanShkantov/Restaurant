@@ -208,7 +208,7 @@
         </Border>
 
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
-            <ItemsControl Grid.Row="1" ItemsSource="{Binding Products}" Margin="0,4,0,0">
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Products}" Margin="0,4,0,0" d:ItemsSource="{d:SampleData ItemCount=2}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Background="White" CornerRadius="10" Padding="12,8" Margin="0,0,0,6"

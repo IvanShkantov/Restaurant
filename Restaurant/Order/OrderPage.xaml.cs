@@ -68,7 +68,7 @@ namespace Restaurant.Order
                     Status = g.Key.Status,
                     TotalOrderPrice = (decimal)g.Key.TotalOrderPrice,
                     EmployeeFullName = g.Key.EmployeeFullName,
-                    EmployeeID = (int)g.Key.EmployeeID,
+                    EmployeeID = g.Key.EmployeeID ?? 0,
                     Items = new ObservableCollection<OrderItemViewModel>(
                         g.Select(item => new OrderItemViewModel
                         {

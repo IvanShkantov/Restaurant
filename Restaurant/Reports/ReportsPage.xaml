@@ -25,9 +25,9 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0" Margin="0,0,0,18" Background="White" CornerRadius="16" Padding="20" Effect="{StaticResource HeaderShadow}">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="Итоги работы предприятия" FontSize="26" FontWeight="Bold" 
-                           Foreground="#1E293B" VerticalAlignment="Center"/>
+                           Foreground="#1E293B" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </StackPanel>
         </Border>
 

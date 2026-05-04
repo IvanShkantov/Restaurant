@@ -167,7 +167,7 @@ namespace Restaurant.Activity
                     {
                         LogID = l.LogID,
                         EventDate = l.EventDate,
-                        EmployeeID = (int)l.EmployeeID,
+                        EmployeeID = l.EmployeeID ?? 0,
                         EmployeeFullName = l.EmployeeNameSnapshot,
                         EventType = l.EventType,
                         EntityName = l.EntityName,
@@ -240,11 +240,11 @@ namespace Restaurant.Activity
     {
         public int LogID { get; set; }
         public DateTime EventDate { get; set; }
-        public int EmployeeID { get; set; }
+        public int? EmployeeID { get; set; }
         public string EmployeeFullName { get; set; }
         public string EventType { get; set; }
         public string EntityName { get; set; }
-        public int EntityID { get; set; }
+        public int? EntityID { get; set; }
         public string Description { get; set; }
         public string Details { get; set; }
     }

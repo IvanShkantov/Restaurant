@@ -142,10 +142,10 @@ namespace Restaurant.Services
         {
             get
             {
-                if (IsSufficient) return "✅ Всех продуктов достаточно.";
+                if (IsSufficient) return "Всех продуктов достаточно.";
 
                 var sb = new StringBuilder();
-                sb.AppendLine("⚠️ Недостаточно продуктов на складе:\n");
+                sb.AppendLine("Недостаточно продуктов на складе:\n");
                 foreach (var s in Shortages)
                 {
                     sb.AppendLine($"• {s.ShortageText}");

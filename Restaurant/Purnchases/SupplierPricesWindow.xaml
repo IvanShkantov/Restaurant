@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Цены поставщика"
         Background="#F8FAFC"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" d:DesignWidth="461.88">
     <Window.Resources>
         <imgcon:ImagePathConverter x:Key="ImagePathConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
@@ -158,7 +158,7 @@
         </Border>
 
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Prices}" d:ItemsSource="{d:SampleData ItemCount=6}">
+            <ItemsControl ItemsSource="{Binding Prices}" d:ItemsSource="{d:SampleData ItemCount=3}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="0,0,0,10" Background="White" CornerRadius="14" 
